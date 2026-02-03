@@ -1,8 +1,6 @@
-version: '3.9'
-
 services:
   mongodb:
-    image: mongo:7-alpine
+    image: mongo:7.0
     container_name: isa-mongodb
     restart: unless-stopped
     command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
