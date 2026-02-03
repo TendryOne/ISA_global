@@ -1,0 +1,69 @@
+export interface eventLogInterface {
+    userId: string
+    eventType: EventType
+    entityType: EntityType
+    entityId: string
+    timestamp: Date
+    payload: any
+}
+
+export type EntityType =
+    | 'module'
+    | 'assignment'
+    | 'submission'
+    | 'grade'
+    | 'user'
+    | 'payment'
+    | 'schedule'
+    | 'resource'
+    | 'administrativeRequest'
+    | 'BugReport';
+
+
+export type EventType =
+    // STUDENT
+    | 'STUDENT_LOGIN' //OK
+    | 'STUDENT_LOGOUT' // OK
+    | 'STUDENT_PASSWORD_CHANGED' // OK
+    | 'STUDENT_PROFILE_UPDATED' // OK
+    | 'STUDENT_ENROLLED'
+    | 'STUDENT_ADMISSION_REQUESTED'
+    | 'STUDENT_MODULE_ENROLLED'
+    | 'STUDENT_MODULE_UNENROLLED'
+    | 'STUDENT_SCHEDULE_VIEWED'
+    | 'STUDENT_RESOURCE_DOWNLOADED'
+    | "STUDENT_OFFICIAL_RESOURCE_DOWNLOADED"
+    | 'STUDENT_ASSIGNMENT_VIEWED' // OK
+    | 'STUDENT_ASSIGNMENT_SUBMITTED'
+    | 'STUDENT_ASSIGNMENT_DOWNLOADED' // OK
+    | 'STUDENT_SUBMISSION_UPDATED'
+    | 'STUDENT_GRADES_VIEWED'
+    | 'STUDENT_PAYMENT_SENT'
+    | 'STUDENT_FEES_VIEWED'
+    | 'STUDENT_REPORT_SUBMITTED'
+    | 'STUDENT_REQUEST_SUBMITTED'
+    | 'STUDENT_MESSAGE_SENT'
+
+
+    // PROFESSOR
+    | 'PROFESSOR_LOGIN' // OK
+    | 'PROFESSOR_LOGOUT' // OK
+    | 'PROFESSOR_PASSWORD_CHANGED' // OK
+    | 'PROFESSOR_PROFILE_UPDATED' // OK
+    | 'PROFESSOR_RESOURCE_UPLOADED' // OK
+    | 'PROFESSOR_RESOURCE_UPDATED' // OK
+    | 'PROFESSOR_RESOURCE_DELETED' // OK
+    | 'PROFESSOR_ASSIGNMENT_CREATED' // OK
+    | 'PROFESSOR_ASSIGNMENT_UPDATED' // OK
+    | 'PROFESSOR_ASSIGNMENT_DELETED' // OK
+    | 'PROFESSOR_ASSIGNMENT_LOCKED_GRADED' // OK
+    | "PROFESSOR_ASSIGNMENT_EXAM_RESCHEDULED" // OK
+    | "PROFESSOR_ASSIGNMENT_EXAM_CANCELLED" // OK
+    | "PROFESSOR_GRADES_DOWNLOADED" // OK
+    | 'PROFESSOR_GRADE_UPDATED' // OK
+    | 'PROFESSOR_ASSIGNMENT_VIEWED' // OK
+    | 'PROFESSOR_SUBMISSION_LIST_DOWNLOADED' // OK
+    | 'PROFESSOR_GRADE_ENTERED' // OK
+
+    ;
+

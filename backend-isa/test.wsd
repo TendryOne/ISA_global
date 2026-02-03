@@ -1,0 +1,44 @@
+@startuml
+!theme plain
+autonumber
+
+skinparam defaultFontName Calibri
+skinparam defaultFontSize 13
+skinparam shadowing false
+
+skinparam sequence {
+    ArrowThickness 1
+    ArrowColor #000000
+    LifeLineBorderColor #000000
+    LifeLineBackgroundColor transparent
+    ParticipantPadding 35
+    BoxPadding 20
+    MessageAlign center
+}
+
+skinparam sequenceLifeLine {
+    BorderStyle dashed
+}
+
+actor "Étudiant" as Student
+participant "Système" as System
+participant "Service Email" as Mail
+
+Student -> System : Demander inscription
+System -> Student : Afficher formulaire
+
+Student -> System : Soumettre données inscription
+
+alt Données invalides
+    System -> Student : Message d’erreur
+else Données valides
+    alt Email déjà utilisé
+        System -> Student : Email déjà existant
+    else Email valide
+        System -> Student : Inscription enregistrée
+        System -> Mail : Envoyer email de confirmation
+        Mail -> Student : Email de confirmation
+    end
+end
+
+@enduml

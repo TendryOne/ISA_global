@@ -1,0 +1,6 @@
+declare module 'prismjs'
+declare module 'prismjs/components/prism-typescript'
+declare module 'prismjs/components/prism-json'
+declare module 'prismjs/components/prism-python'
+declare module 'prismjs/components/prism-sql'
+declare module 'prismjs/components/prism-java'

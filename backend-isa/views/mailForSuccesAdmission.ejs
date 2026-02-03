@@ -1,0 +1,224 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscription Validée - ISA</title>
+    <style type="text/css">
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+        }
+
+        @media screen and (max-width: 600px) {
+            .responsive-table {
+                width: 100% !important;
+            }
+
+            .responsive-padding {
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc;">
+    <!-- Préheader invisible -->
+    <div style="display: none; max-height: 0px; overflow: hidden;">
+        Votre inscription à l'ISA est confirmée. Accès complet après vérification de paiement.
+    </div>
+
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background: #f8fafc;">
+        <tr>
+            <td align="center" style="padding: 40px 15px;">
+                <!-- Carte principale -->
+                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0"
+                    class="responsive-table"
+                    style="max-width: 600px; background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+
+                    <!-- Bandeau couleur -->
+                    <tr>
+                        <td height="8" style="background: linear-gradient(90deg, #5086c1 0%, #30a855 100%);"></td>
+                    </tr>
+
+                    <!-- Logo -->
+                    <tr>
+                        <td align="center" style="padding: 40px 30px 20px;">
+                            <img src="https://www.isa-ambato.mg/_ipx/w_400/logo-write.svg" alt="ISA" width="180">
+                        </td>
+                    </tr>
+
+                    <!-- Contenu -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;" class="responsive-padding">
+                            <!-- Icône validation -->
+                            <table role="presentation" align="center" style="margin-bottom: 25px;">
+                                <tr>
+                                    <td
+                                        style="background: #EFF6FF; border-radius: 9999px; width: 80px; height: 80px; text-align: center; padding: 20px;">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="#30a855">
+                                            <path
+                                                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                                        </svg>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h1
+                                style="color: #1E293B; font-size: 28px; font-weight: 700; text-align: center; margin: 0 0 15px 0;">
+                                Inscription Validée
+                            </h1>
+
+                            <p
+                                style="color: #64748B; font-size: 16px; line-height: 1.6; text-align: center; margin: 0 0 30px 0;">
+                                Félicitations ! Votre inscription à l'<strong style="color: #5086c1;">Institut Supérieur
+                                    d'Ambatomirahavavy</strong><br>
+                                a été enregistrée avec succès.
+                            </p>
+
+                            <!-- Carte identifiants -->
+                            <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0"
+                                style="background: #F8FAFC; border-radius: 12px; border: 1px solid #E2E8F0; margin-bottom: 30px;">
+                                <tr>
+                                    <td style="padding: 25px; text-align: center;">
+                                        <h2 style="color: #1E293B; font-size: 18px; margin: 0 0 20px 0;">
+                                            Vos identifiants de connexion
+                                        </h2>
+
+                                        <table role="presentation" width="100%" style="margin-bottom: 20px;">
+                                            <tr>
+                                                <td
+                                                    style="text-align: right; padding: 8px 10px; width: 40%; color: #64748B; font-weight: 600;">
+                                                    Matricule :</td>
+                                                <td
+                                                    style="text-align: left; padding: 8px 10px; font-family: 'Courier New', monospace; font-weight: 700; color: #1E293B;">
+                                                    <%= matricule %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="text-align: right; padding: 8px 10px; color: #64748B; font-weight: 600;">
+                                                    Mot de passe :</td>
+                                                <td
+                                                    style="text-align: left; padding: 8px 10px; font-family: 'Courier New', monospace; font-weight: 700; color: #1E293B;">
+                                                    <%= password %>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <p
+                                            style="color: #ef4444; font-size: 14px; font-weight: 600; margin: 20px 0 0 0;">
+                                            ⚠️ Mot de passe temporaire - À changer dès la première connexion
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Validation paiement -->
+                            <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0"
+                                style="margin-bottom: 30px; background: #fffbeb; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <h2
+                                            style="color: #92400E; font-size: 16px; margin: 0 0 10px 0; display: flex; align-items: center;">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#f59e0b"
+                                                style="margin-right: 8px;">
+                                                <path
+                                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" />
+                                            </svg>
+                                            Validation de votre paiement
+                                        </h2>
+                                        <p style="color: #92400E; font-size: 14px; margin: 0 0 10px 0;">
+                                            <strong>Votre accès aux fonctionnalités complètes sera activé après
+                                                vérification de votre paiement par nos services.</strong>
+                                        </p>
+                                        <ul style="margin: 0; padding-left: 20px; color: #92400E; font-size: 14px;">
+                                            <li style="margin-bottom: 8px;">Vous pouvez suivre l'état de validation en
+                                                vous connectant à votre espace</li>
+                                            <li style="margin-bottom: 8px;">Nos services scolaires traitent votre
+                                                dossier en priorité</li>
+                                            <li>Nous vous remercions pour votre patience et nous excusons pour le délai
+                                                occasionné</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Bouton -->
+                            <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0"
+                                style="margin-bottom: 30px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="https://edu.isa-ambato.mg/login"
+                                            style="background: #5086c1; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; display: inline-block;">
+                                            Accéder à mon espace étudiant
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Sécurité -->
+                            <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0"
+                                style="margin-bottom: 30px; background: #fef2f2; border-radius: 12px; border-left: 4px solid #ef4444;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <h2
+                                            style="color: #991b1b; font-size: 16px; margin: 0 0 10px 0; display: flex; align-items: center;">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#ef4444"
+                                                style="margin-right: 8px;">
+                                                <path
+                                                    d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+                                            </svg>
+                                            Sécurité du compte
+                                        </h2>
+                                        <ul style="margin: 0; padding-left: 28px; color: #991b1b; font-size: 14px;">
+                                            <li style="margin-bottom: 8px;">Ne partagez jamais vos identifiants</li>
+                                            <li style="margin-bottom: 8px;">Choisissez un mot de passe fort et unique
+                                            </li>
+                                            <li>En cas de problème, contactez <a href="mailto:<%= mail %>"
+                                                    style="color: #5086c1;">le support</a> ou <a href="tel:<%= telephone %>"
+                                                    style="color: #5086c1;">le service la scolarité</a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td
+                            style="padding: 25px 40px; background: #F1F5F9; text-align: center; border-top: 1px solid #E2E8F0;">
+                            <p style="color: #64748B; font-size: 12px; margin: 0;">
+                                © <%= new Date().getFullYear() %> Institut Supérieur d'Ambatomirahavavy<br>
+                                    LOT RVY 311, Ambohidranomanga - Madagascar<br>
+                                    <a href="https://www.isa-ambato.mg"
+                                        style="color: #5086c1; text-decoration: none;">www.isa-ambato.mg</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,282 @@
+@startuml Domain Model - Concepts Metier
+
+' ===============================
+' ACTEURS DU DOMAINE
+' ===============================
+
+class User {
+  - matricule : String
+  - name : String
+  - firstName : String
+  - email : String
+  - address : String
+  - phone : String
+  - gender : String
+  - role : String
+}
+
+class Student {
+  - inscriptionId : String
+  - identityPhoto : String
+  - birthDate : Date
+  - birthPlace : String
+  - cin : String
+  - emergencyContactName : String
+  - emergencyContactRelation : String
+  - emergencyContactPhone : String
+  - bacSeries : String
+  - bacYear : Number
+  - previousInstitution : String
+  - field : String
+  - level : String
+  - promotionYear : Number
+  - verified : Boolean
+}
+
+class Parcours {
+  - status : String
+}
+
+class Professor {
+  - emailProfessional : String
+  - hireDate : Date
+  - isPermanent : Boolean
+  - salaryType : String
+  - salaryAmount : Number
+  - department : String[]
+}
+
+class Admin {
+  - function : String
+}
+
+class PendingStudent {
+  - inscriptionId : String
+  - identityPhoto : String
+  - firstName : String
+  - lastName : String
+  - birthDate : Date
+  - birthPlace : String
+  - gender : String
+  - cin : String
+  - address : String
+  - phone : String
+  - email : String
+  - emergencyContactName : String
+  - emergencyContactRelation : String
+  - emergencyContactPhone : String
+  - lastDiploma : String
+  - bacSeries : String
+  - bacYear : Number
+  - previousInstitution : String
+  - field : String
+  - transactionNumber : String
+  - submissionDate : Date
+  - status : String
+  - rejectionReason : String
+  - levelAsked : String
+}
+
+' ===============================
+' CONCEPTS PEDAGOGIQUES
+' ===============================
+
+class Promotion {
+  - name : String
+  - startDate : Date
+  - endDate : Date
+  - level : String
+  - isActive : Boolean
+  - field : String
+}
+
+class TeachingUnit {
+  - code : String
+  - name : String
+  - field : String
+  - level : String
+  - semester : String
+  - credits : Number
+  - description : String
+}
+
+class Module {
+  - code : String
+  - title : String
+  - coefficient : Number
+  - credits : Number
+  - type : String
+  - hours : Number
+  - description : String
+  - files : String[]
+}
+
+class Assignment {
+  - title : String
+  - description : String
+  - dueDate : Date
+  - fileUrl : String
+  - type : String
+  - session : String
+  - submissionLocation : String
+  - isActive : Boolean
+  - lockedGrade : Boolean
+}
+
+class Submission {
+  - fileUrl : String
+  - submittedAt : Date
+  - grade : Number
+  - status : String
+  - feedback : String
+}
+
+class Schedule {
+  - title : String
+  - description : String
+  - room : String
+  - courseType : String
+  - date : Date
+  - startTime : String
+  - endTime : String
+  - duration : Number
+  - type : String
+  - googleMeetLink : String
+  - status : String
+}
+
+class Resources {
+  - title : String
+  - description : String
+  - link : String
+  - type : String
+}
+
+' ===============================
+' CONCEPTS ADMINISTRATIFS
+' ===============================
+
+class AdministrativeRequest {
+  - matricule : String
+  - requestType : String
+  - status : String
+  - recoveryDate : Date
+}
+
+' ===============================
+' CONCEPTS FINANCIERS
+' ===============================
+
+class TuitionFee {
+  - year : Number
+  - field : String
+  - level : String
+  - totalAmount : Number
+}
+
+class Installment {
+  - label : String
+  - dueDate : Date
+  - amount : Number
+  - proofFile : String
+  - transactionRef : String
+  - method : String
+  - verified : Boolean
+  - paymentDate : Date
+}
+
+class FeesManagement {
+  - level : String
+  - field : String
+  - fees : Number
+}
+
+class Echeance {
+  - date : Date
+  - amount : Number
+  - label : String
+}
+
+' ===============================
+' COMMUNICATION
+' ===============================
+
+class Notification {
+  - title : String
+  - message : String
+  - informationType : String
+  - warningLevel : String
+  - type : String
+  - linkTo : String
+  - expireAt : Date
+}
+
+' ===============================
+' RELATIONS D'HERITAGE
+' ===============================
+
+User <|-- Student
+User <|-- Professor
+User <|-- Admin
+
+' ===============================
+' COMPOSITIONS
+' ===============================
+
+Student *-- "0..*" Parcours
+TuitionFee *-- "0..*" Installment
+FeesManagement *-- "0..*" Echeance
+
+' ===============================
+' ASSOCIATIONS - PARCOURS ETUDIANT
+' ===============================
+
+Parcours --> Promotion : inscrit dans
+Student --> "0..*" Promotion : parcours
+
+' ===============================
+' ASSOCIATIONS - PEDAGOGIE
+' ===============================
+
+Module --> TeachingUnit : appartient à
+Module --> Professor : enseigné par
+
+Assignment --> Module : concerne
+Assignment --> Promotion : destiné à
+Assignment --> Professor : créé par
+
+Submission --> Student : soumis par
+Submission --> Assignment : pour
+
+Schedule --> "1..*" Promotion : concerne
+Schedule --> Module : enseigne
+Schedule --> Professor : animé par
+
+Resources --> Module : relatif à
+Resources --> Promotion : destiné à
+Resources --> Professor : mis en ligne par
+
+' ===============================
+' ASSOCIATIONS - ADMINISTRATIF
+' ===============================
+
+AdministrativeRequest --> Student : demandé par
+AdministrativeRequest --> Promotion : pour promotion
+AdministrativeRequest --> Admin : traité par
+
+' ===============================
+' ASSOCIATIONS - FINANCIER
+' ===============================
+
+TuitionFee --> Student : payé par
+TuitionFee --> Promotion : pour promotion
+Installment --> Admin : vérifié par
+
+' ===============================
+' ASSOCIATIONS - COMMUNICATION
+' ===============================
+
+Notification --> User : envoyé à
+Notification --> "0..*" Promotion : destiné à
+
+@enduml

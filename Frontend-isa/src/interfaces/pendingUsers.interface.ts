@@ -1,0 +1,34 @@
+export interface UserPendingInterface {
+  _id: string
+  inscriptionId: string
+  identityPhoto: string
+  firstName: string
+  lastName: string
+  birthDate: Date
+  birthPlace: string
+  gender: string
+  cin: string
+  address: string
+  phone: string
+  email: string
+  emergencyContactName: string
+  emergencyContactPhone: string
+  emergencyContactRelation: string
+  lastDiploma: string
+  bacYear: number
+  bacSeries: string
+  previousInstitution: string
+  field: string
+  bacTranscript: string
+  idDocument: string
+  residenceCertificate: string
+  transactionNumber: string
+  submissionDate: Date
+  status: string
+  expiredToken: boolean
+  token: string
+  acceptingTerms: boolean
+  createdAt: Date
+  rejectionReason: string
+  levelAsked: string
+}

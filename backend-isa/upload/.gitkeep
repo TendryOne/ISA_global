@@ -1,0 +1,2 @@
+# Ce dossier contient les fichiers uploadés par les utilisateurs
+# Les fichiers ne sont pas commités sur git mais persistent sur le serveur via Docker volumes

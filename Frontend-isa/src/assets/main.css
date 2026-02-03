@@ -1,0 +1,129 @@
+* {
+  font-family: 'Roboto';
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  /* border: 1px solid red; */
+}
+
+:root {
+  /* Couleurs primaires (bleu) */
+  --primary-color: #5086c1;
+  --primary-color-rgb: 80, 134, 193;
+  --primary-dark: #1a252f;
+  --primary-darker: #0e161e;
+  --primary-light: #3498db;
+  --primary-lighter: #5aa8e8;
+  --primary-extra-light: #5087c12f;
+  --primary-color-light: #5087c17c;
+
+  /* Couleurs secondaires (vert) */
+  --secondary-color: #30a855;
+  --secondary-color-rgb: 48, 168, 85;
+  --secondary-dark: #1e7a3d;
+  --secondary-darker: #0f5c2b;
+  --secondary-light: #4abd6a;
+  --secondary-lighter: #6fd487;
+  --secondary-extra-light: #30a8552f;
+  --secondary-color-light: #30a8567c;
+
+  /* Couleurs tertiaires (gris) */
+  --tertiary-color: gray;
+  --tertiary-dark: #5e5e5e;
+  --tertiary-darker: #3a3a3a;
+  --tertiary-light: #a3a3a3;
+  --tertiary-lighter: #d3d3d3;
+  --tertiary-extra-light: #f5f5f5;
+  --tertiary-color-light: rgba(128, 128, 128, 0.493);
+
+  /* Accents et états */
+  --accent-color: #3498db;
+  --accent-dark: #1d6fa5;
+  --accent-light: #5aa8e8;
+  --error: #eb4d4b;
+  --error-dark: #c23532;
+  --error-light: #ff6b6b;
+  --success: #2ecc71; /* Vert plus équilibré et lisible */
+  --success-dark: #27ae60; /* Variante foncée avec bon contraste */
+  --success-light: #a3e4d7; /* Variante claire pour fond ou hover */
+  --warning: orange;
+  --info: #3498db;
+  --warning-dark: #d35400;
+  --warning-light: #ffa502;
+
+  /* Neutres */
+  --white: white;
+  --black: #2d3436;
+  --gray: gray;
+  --gray-dark: rgb(58, 58, 58);
+  --gray-darker: #2a2a2a;
+  --gray-light: rgba(128, 128, 128, 0.479);
+  --gray-lighter: #e0e0e0;
+  --gray-super-light: rgba(128, 128, 128, 0.2);
+  --gray-extra-light: #f5f5f5;
+  /* Variables de texte */
+  --text-dark: #2d3436;
+  --text-secondary: #636e72;
+  --text-tertiary: #b2bec3;
+
+  /* Variables de background */
+  --background-light: #f8f9fa;
+  --background-secondary: #f1f3f4;
+
+  /* Variables de bordure */
+  --border-light: #e9ecef;
+  --border-secondary: #dee2e6;
+
+  /* Variables RGB pour transparence */
+  --success-rgb: 46, 204, 113;
+  --warning-rgb: 255, 165, 2;
+  --error-rgb: 235, 77, 75;
+
+  /* Effets */
+  --shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-dark: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 12px 24px rgba(0, 0, 0, 0.2);
+  --shadow-light: 0px 1px 2px rgba(0, 0, 0, 0.05), 0px 4px 8px rgba(0, 0, 0, 0.05);
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --rounded: 100%;
+}
+
+.calc {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.calc-transp {
+  background-color: rgba(0, 0, 0, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+}
+
+.help {
+  background: var(--black);
+  padding: 10px;
+  border-radius: var(--radius);
+  color: var(--white);
+  font-size: 12px;
+}

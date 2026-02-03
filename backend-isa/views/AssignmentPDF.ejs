@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= assignment.title %></title>
+    <style>
+        :root {
+            --primary-color: #5086c1;
+            --primary-dark: #3d6a9e;
+            --primary-extra-light: #e8f0f8;
+            --secondary-color: #30a855;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-secondary: #6c757d;
+            --error: #eb4d4b;
+            --warning: #f39c12;
+            --background-light: #f8f9fa;
+            --border-light: #dee2e6;
+            --gray-extra-light: #e9ecef;
+            --radius: 4px;
+            --radius-lg: 8px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--white);
+            padding: 30px;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+
+        /* Header avec logo */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .header-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .header h1 {
+            color: var(--primary-dark);
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .header-subtitle {
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .meta-info {
+            background: var(--background-light);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .meta-label {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 13px;
+        }
+
+        .meta-value {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .type-homework {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .type-project {
+            background: #9b59b6;
+            color: var(--white);
+        }
+
+        .type-exam {
+            background: var(--error);
+            color: var(--white);
+        }
+
+        .content-section {
+            margin-top: 25px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+        }
+
+        .section-title {
+            color: var(--primary-dark);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        /* Styles Quill pour la description */
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .description p {
+            margin-bottom: 0.75rem;
+            text-align: justify;
+        }
+
+        .description p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Titres */
+        .description h1,
+        .description h2,
+        .description h3,
+        .description h4,
+        .description h5,
+        .description h6 {
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+            line-height: 1.3;
+        }
+
+        .description h1:first-child,
+        .description h2:first-child,
+        .description h3:first-child {
+            margin-top: 0;
+        }
+
+        .description h1 {
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .description h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .description h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .description h3 {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+        }
+
+        .description h4 {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .description h5,
+        .description h6 {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Citations */
+        .description blockquote {
+            border-left: 4px solid var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-extra-light) 0%, rgba(80, 134, 193, 0.05) 100%);
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            font-style: italic;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .description blockquote::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary-color);
+            position: absolute;
+            top: -0.5rem;
+            left: 0.5rem;
+            font-weight: bold;
+            opacity: 0.3;
+        }
+
+        .description blockquote p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Code inline */
+        .description code {
+            background: var(--gray-extra-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 0.2rem 0.4rem;
+            font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Source Code Pro', Consolas, 'Courier New', monospace;
+            font-size: 0.82rem;
+            color: var(--error);
+            font-weight: 500;
+        }
+
+        /* Blocs de code avec style VS Code Dark */
+        .description pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1rem 1.25rem 1.25rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            position: relative;
+            font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Source Code Pro', Consolas, 'Courier New', monospace;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            tab-size: 2;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Barre de couleur en haut du bloc de code */
+        .description pre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .description pre code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            color: #d4d4d4;
+            font-family: inherit;
+            white-space: pre;
+            font-weight: normal;
+        }
+
+        /* Style pour les blocs de code Quill (ql-code-block) */
+        .description .ql-code-block {
+            font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Source Code Pro', Consolas, 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 0.25rem 0.75rem;
+            margin: 0;
+            border-left: 3px solid var(--primary-color);
+            display: block;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+
+        /* Regroupement des blocs ql-code-block consécutifs */
+        .description .ql-code-block + .ql-code-block {
+            border-top: none;
+        }
+
+        /* Conteneur de blocs de code multiples */
+        .ql-code-block-container {
+            background: #1e1e1e;
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1rem 1.25rem 1.25rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            position: relative;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ql-code-block-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        /* Coloration syntaxique pour les blocs de code - Style VS Code Dark */
+        .description pre .comment,
+        .description .ql-code-block .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .description pre .keyword,
+        .description .ql-code-block .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+
+        .description pre .string,
+        .description .ql-code-block .string {
+            color: #ce9178;
+        }
+
+        .description pre .number,
+        .description .ql-code-block .number {
+            color: #b5cea8;
+        }
+
+        .description pre .function,
+        .description .ql-code-block .function {
+            color: #dcdcaa;
+        }
+
+        .description pre .class-name,
+        .description .ql-code-block .class-name {
+            color: #4ec9b0;
+        }
+
+        .description pre .operator,
+        .description .ql-code-block .operator {
+            color: #d4d4d4;
+        }
+
+        .description pre .punctuation,
+        .description .ql-code-block .punctuation {
+            color: #d4d4d4;
+        }
+
+        .description pre .variable,
+        .description .ql-code-block .variable {
+            color: #9cdcfe;
+        }
+
+        .description pre .tag,
+        .description .ql-code-block .tag {
+            color: #569cd6;
+        }
+
+        .description pre .attr-name,
+        .description .ql-code-block .attr-name {
+            color: #9cdcfe;
+        }
+
+        .description pre .attr-value,
+        .description .ql-code-block .attr-value {
+            color: #ce9178;
+        }
+
+        .description pre .builtin,
+        .description .ql-code-block .builtin {
+            color: #4ec9b0;
+        }
+
+        .description pre .property,
+        .description .ql-code-block .property {
+            color: #9cdcfe;
+        }
+
+        .description pre .constant,
+        .description .ql-code-block .constant {
+            color: #4fc1ff;
+        }
+
+        .description pre .boolean,
+        .description .ql-code-block .boolean {
+            color: #569cd6;
+        }
+
+        .description pre .null,
+        .description .ql-code-block .null {
+            color: #569cd6;
+        }
+
+        .description pre .selector,
+        .description .ql-code-block .selector {
+            color: #d7ba7d;
+        }
+
+        .description pre .important,
+        .description .ql-code-block .important {
+            color: #c586c0;
+            font-weight: 600;
+        }
+
+        /* Listes */
+        .description ul,
+        .description ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .description ul {
+            list-style: none;
+        }
+
+        .description ul li {
+            position: relative;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        .description ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .description ol li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
+        }
+
+        .description ol li::marker {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Liens */
+        .description a {
+            color: var(--primary-color);
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            transition: text-decoration-color 0.2s ease;
+        }
+
+        /* Texte en gras et italique */
+        .description strong {
+            font-weight: 700;
+        }
+
+        .description em {
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .description u {
+            text-decoration: underline;
+            text-decoration-color: var(--primary-color);
+            text-decoration-thickness: 2px;
+        }
+
+        /* Tables */
+        .description table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .description th,
+        .description td {
+            border: 1px solid var(--border-light);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .description th {
+            background: var(--primary-color);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .description tr:nth-child(even) {
+            background: var(--background-light);
+        }
+
+        /* Fichier joint */
+        .file-attachment {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 15px 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-attachment-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 13px;
+            word-break: break-all;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .file-icon {
+            font-size: 16px;
+        }
+
+        .important-notice {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: var(--radius);
+        }
+
+        .important-notice p {
+            margin: 0;
+            color: #856404;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-light);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 11px;
+        }
+
+        @media print {
+            body {
+                padding: 15px;
+            }
+            body::after {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <h1><%= assignment.title %></h1>
+            <p class="header-subtitle">Institut Supérieur d'Ambatomirahavavy</p>
+        </div>
+        <% if (logoUrl) { %>
+        <img src="<%= logoUrl %>" alt="Logo ISA" class="header-logo">
+        <% } %>
+    </div>
+
+    <div class="meta-info">
+        <div class="meta-grid">
+            <div class="meta-item">
+                <span class="meta-label">Type:</span>
+                <span class="type-badge type-<%= assignment.type %>">
+                    <%= assignment.type === 'homework' ? 'Devoir' : assignment.type === 'project' ? 'Projet' : 'Examen' %>
+                </span>
+            </div>
+            <% if (assignment.module) { %>
+                <% if (assignment.module.code) { %>
+                <div class="meta-item">
+                    <span class="meta-label">Code module:</span>
+                    <span class="meta-value"><%= assignment.module.code %></span>
+                </div>
+                <% } %>
+                <% if (assignment.module.name || assignment.module.title) { %>
+                <div class="meta-item">
+                    <span class="meta-label">Module:</span>
+                    <span class="meta-value"><%= assignment.module.title || assignment.module.name %></span>
+                </div>
+                <% } %>
+            <% } %>
+            <% if (assignment.dueDate) { %>
+            <div class="meta-item">
+                <span class="meta-label">Date limite:</span>
+                <span class="meta-value"><%= new Date(assignment.dueDate).toLocaleString('fr-FR', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) %></span>
+            </div>
+            <% } %>
+            <div class="meta-item">
+                <span class="meta-label">Session:</span>
+                <span class="meta-value"><%= assignment.session === 'rattrapage' ? 'Rattrapage' : 'Normale' %></span>
+            </div>
+        </div>
+    </div>
+
+        <% if (assignment.description) { %>
+        <div class="content-section">
+            <div class="description">
+                <%- assignment.description %>
+            </div>
+        </div>
+        <% } %>
+
+        <% if (assignment.fileUrl) { %>
+        <div class="file-attachment">
+            <div class="file-attachment-title">
+                <span class="file-icon">📎</span>
+                Fichier joint
+            </div>
+            <a href="<%= assignment.fileUrl %>" class="file-link" target="_blank">
+                <span class="file-icon">📄</span>
+                <%= assignment.fileUrl %>
+            </a>
+        </div>
+        <% } %>
+
+        <% if (assignment.submissionLocation) { %>
+        <div class="important-notice">
+            <p>📌 Lieu de soumission: <%= assignment.submissionLocation === 'online' ? 'En ligne' : 'En personne' %></p>
+        </div>
+        <% } %>
+
+        <div class="footer">
+            <p>Document généré le <%= new Date().toLocaleString('fr-FR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }) %></p>
+        <p style="margin-top: 5px;">© <%= new Date().getFullYear() %> Institut Supérieur d'Ambatomirahavavy - Tous droits réservés</p>
+    </div>
+</body>
+</html>

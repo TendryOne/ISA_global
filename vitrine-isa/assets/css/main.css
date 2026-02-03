@@ -1,0 +1,72 @@
+* {
+    font-family: 'Roboto';
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    /* border: 1px solid red; */
+  }
+  
+  :root {
+    --primary-color: #5086c1;
+    --primary-color-rgb: 80, 134, 193;
+    --primary-color-light: #5087c17c;
+    --tertiary-color: gray;
+    --tertiary-color-rgb: 128, 128, 128;
+    --tertiary-color-light : rgba(128, 128, 128, 0.493);
+    --accent-color: #3498db;
+    --primary-dark: #1a252f;
+    --primary-light: #3498db;
+    --primary-color-extra-light: #5087c12f;
+    --secondary-color: #30a855;
+    --secondary-color-light : #30a8567c ;
+    --secondary-color-rgb: 48, 168, 85;
+    --gray: gray;
+    --gray-light: rgba(128, 128, 128, 0.479);
+    --gray-dark: rgb(58, 58, 58);
+    --gray-super-light: rgba(128, 128, 128, 0.2);
+    --white: white;
+    --error: #eb4d4b;
+    --success: #1dd1a1;
+    --warning: orange;
+    --shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 8px 16px rgba(0, 0, 0, 0.1);
+    --radius: 8px;
+    --rounded: 100%;
+    --black: #2d3436;
+  }
+  
+  .calc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+  }
+  
+  .calc-transp {
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+  }
+  
+  .help {
+    background: var(--black);
+    padding: 10px;
+    border-radius: var(--radius);
+    color: var(--white);
+    font-size: 12px;
+  }
+  

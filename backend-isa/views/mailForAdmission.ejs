@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Félicitations - Admission à l'ISA</title>
+    <!--[if mso]>
+    <style>
+        .button-container { display: none !important; }
+        .mobile-button { display: block !important; }
+    </style>
+    <![endif]-->
+    <style>
+        @media only screen and (max-width: 600px) {
+            .responsive-table {
+                width: 100% !important;
+            }
+
+            .responsive-padding {
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body
+    style="margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc;">
+
+    <!-- Préheader texte invisible -->
+    <div style="display: none; max-height: 0px; overflow: hidden;">
+        Félicitations <%= candidateName %> ! Vous êtes admis à l'ISA pour la filière <%= programName %>.
+                Numéro de dossier : <%= registrationNumber %>.
+                    Lien d'inscription : <%= registrationLink %>
+    </div>
+
+    <!-- Container principal -->
+    <table width="100%" cellspacing="0" cellpadding="0" style="background: #f8fafc;">
+        <tr>
+            <td align="center" style="padding: 40px 15px;">
+                <!-- Carte moderne -->
+                <table width="100%" cellspacing="0" cellpadding="0" class="responsive-table"
+                    style="max-width: 600px; background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); overflow: hidden;">
+
+                    <!-- Bandeau institutionnel -->
+                    <tr>
+                        <td height="8" style="background: linear-gradient(90deg, #5086c1 0%, #059669 100%);"></td>
+                    </tr>
+
+                    <!-- Logo -->
+                    <tr>
+                        <td align="center" style="padding: 40px 30px 20px;">
+                            <img src="https://www.isa-ambato.mg/_ipx/w_400/logo-write.svg"
+                                alt="Logo ISA - Institut Supérieur d'Ambatomirahavavy" width="180"
+                                style="max-width: 100%; height: auto;">
+                        </td>
+                    </tr>
+
+                    <!-- Contenu principal -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;" class="responsive-padding">
+
+                            <!-- Section confirmation admission -->
+                            <table align="center" width="100%" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center">
+                                        <div
+                                            style="background: #ECFDF5; border-radius: 9999px; width: 80px; height: 80px; text-align: center; padding: 20px; margin-bottom: 25px;">
+                                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path
+                                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
+                                                    fill="#10B981" />
+                                            </svg>
+                                        </div>
+                                        <h1
+                                            style="color: #1E293B; font-size: 28px; font-weight: 700; text-align: center; margin: 0 0 15px 0;">
+                                            Félicitations <%= candidateName %> !
+                                        </h1>
+                                        <p
+                                            style="color: #64748B; font-size: 16px; line-height: 1.6; text-align: center; margin: 0 0 30px 0;">
+                                            Vous êtes admis(e) à l'<strong style="color: #10B981;">Institut Supérieur
+                                                d'Ambatomirahavavy</strong><br>
+                                            pour l'année universitaire <strong>
+                                                <%= academicYear %>
+                                            </strong>.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Section détails admission -->
+                            <table width="100%" cellspacing="0" cellpadding="0"
+                                style="background: #ECFDF5; border-radius: 12px; border: 1px solid #10B981; margin-bottom: 30px;">
+                                <tr>
+                                    <td style="padding: 25px; text-align: center;">
+                                        <p
+                                            style="color: #065F46; font-size: 16px; margin: 0 0 15px 0; font-weight: 600;">
+                                            Filière : <span style="color: #047857;">
+                                                <%= programName %>
+                                            </span>
+                                        </p>
+                                        <p style="color: #065F46; font-size: 14px; margin: 0;">
+                                            Numéro de dossier : <strong>
+                                                <%= registrationNumber %>
+                                            </strong>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Bouton d'action principal -->
+                            <table width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td align="center">
+                                        <table cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td
+                                                    style="border-radius: 8px; background: #10B981; text-align: center;">
+                                                    <a href="<%= registrationLink %>"
+                                                        style="background-color: #10B981; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; font-weight: 600; border-radius: 8px;">
+                                                        Finaliser mon inscription
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding-top: 15px;">
+                                        <p style="color: #64748B; font-size: 13px; margin: 0;">
+                                            Ce lien restera disponible indéfiniment, mais une fois votre inscription
+                                            finalisée et validée, vous ne pourrez plus le modifier.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Section étapes du processus -->
+                            <table width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td style="padding: 20px; background: #F8FAFC; border-radius: 12px;">
+                                        <h2
+                                            style="color: #1E293B; font-size: 18px; margin: 0 0 15px 0; text-align: center;">
+                                            Prochaines étapes
+                                        </h2>
+
+                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                            <!-- Étape 1 -->
+                                            <tr>
+                                                <td width="24" style="vertical-align: top; padding-right: 15px;">
+                                                    <div
+                                                        style="width: 24px; height: 24px; background: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                        <span
+                                                            style="color: white; font-size: 12px; font-weight: bold;">1</span>
+                                                    </div>
+                                                </td>
+                                                <td style="padding-bottom: 15px;">
+                                                    <p style="font-weight: 600; color: #1E293B; margin: 0 0 4px 0;">
+                                                        Finaliser l'inscription en ligne</p>
+                                                    <p style="color: #64748B; margin: 0; font-size: 14px;">
+                                                        Complétez votre dossier d'inscription via le lien ci-dessus
+                                                    </p>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Étape 2 -->
+                                            <tr>
+                                                <td width="24" style="vertical-align: top; padding-right: 15px;">
+                                                    <div
+                                                        style="width: 24px; height: 24px; background: #E2E8F0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                        <span
+                                                            style="color: #64748B; font-size: 12px; font-weight: bold;">2</span>
+                                                    </div>
+                                                </td>
+                                                <td style="padding-bottom: 15px;">
+                                                    <p style="font-weight: 600; color: #1E293B; margin: 0 0 4px 0;">
+                                                        Paiement des frais de scolarité</p>
+                                                    <p style="color: #64748B; margin: 0; font-size: 14px;">
+                                                        À effectuer pour valider définitivement votre inscription
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Section informations financières -->
+                            <table width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td
+                                        style="padding: 20px; background: #F0FDF4; border-radius: 12px; border-left: 4px solid #10B981;">
+                                        <h2 style="color: #065F46; font-size: 18px; margin: 0 0 15px 0;">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                style="vertical-align: middle; margin-right: 8px;" aria-hidden="true">
+                                                <path
+                                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
+                                                    fill="#10B981" />
+                                            </svg>
+                                            Modalités de paiement
+                                        </h2>
+
+                                        <!-- Frais fixes -->
+                                        <h3 style="color: #065F46; font-size: 16px; margin: 0 0 10px 0;">
+                                            Frais à régler :</h3>
+
+                                        <!-- Tableau des frais -->
+                                        <table width="100%" cellspacing="0" cellpadding="0"
+                                            style="margin-bottom: 15px; background: white; border-radius: 8px; overflow: hidden;">
+                                            <tr>
+                                                <td colspan="3"
+                                                    style="padding: 10px; background: #D1FAE5; color: #065F46; font-weight: 600;">
+                                                    Frais de scolarité <%= level %> - Total : <%=
+                                                            tuitionFees.toLocaleString('fr-FR') %> Ar
+                                                </td>
+                                            </tr>
+                                            <tr style="background: #ECFDF5;">
+                                                <td
+                                                    style="padding: 10px; color: #065F46; font-weight: 600; border-bottom: 1px solid #D1FAE5;">
+                                                    Tranche</td>
+                                                <td
+                                                    style="padding: 10px; color: #065F46; font-weight: 600; border-bottom: 1px solid #D1FAE5; text-align: right;">
+                                                    Montant</td>
+                                                <td
+                                                    style="padding: 10px; color: #065F46; font-weight: 600; border-bottom: 1px solid #D1FAE5; text-align: right;">
+                                                    Date limite</td>
+                                            </tr>
+                                            <% paymentInstallments.forEach((installment, index)=> { %>
+                                                <tr>
+                                                    <td
+                                                        style="padding: 10px; <%= index < paymentInstallments.length - 1 ? 'border-bottom: 1px solid #D1FAE5;' : '' %> color: #065F46;">
+                                                        <%= installment.label %>
+                                                    </td>
+                                                    <td
+                                                        style="padding: 10px; <%= index < paymentInstallments.length - 1 ? 'border-bottom: 1px solid #D1FAE5;' : '' %> text-align: right; color: #065F46;">
+                                                        <%= installment.amount.toLocaleString('fr-FR') %> Ar
+                                                    </td>
+                                                    <td
+                                                        style="padding: 10px; <%= index < paymentInstallments.length - 1 ? 'border-bottom: 1px solid #D1FAE5;' : '' %> text-align: right; color: #065F46;">
+                                                        <%= installment.date.toLocaleDateString() %>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
+                                        </table>
+
+                                        <!-- Modes de paiement -->
+                                        <h3 style="color: #065F46; font-size: 16px; margin: 20px 0 10px 0;">Modes de
+                                            paiement acceptés :</h3>
+                                        <ul
+                                            style="margin: 0 0 15px 0; padding-left: 24px; color: #065F46; font-size: 14px;">
+                                            <li style="margin-bottom: 6px;">Virement/Versement bancaire (Preuve du
+                                                bordereau de versement/virement)</li>
+                                            <li>Paiement mobile via Mvola (Noter le numero de transaction)</li>
+                                        </ul>
+
+                                        <p
+                                            style="color: #065F46; font-size: 14px; margin: 15px 0 0 0; font-style: italic;">
+                                            L'inscription se passera en ligne et la scolarité vérifiera le paiement.
+                                            Une fois vérifié, vous aurez accès à votre espace étudiant et pourrez
+                                            récupérer le contenu du cours.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Section informations complémentaires -->
+                            <table width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td
+                                        style="padding: 20px; background: #EFF6FF; border-radius: 12px; border-left: 4px solid #3B82F6;">
+                                        <h2 style="color: #1E40AF; font-size: 16px; margin: 0 0 10px 0;">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                style="vertical-align: middle; margin-right: 8px;" aria-hidden="true">
+                                                <path
+                                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
+                                                    fill="#3B82F6" />
+                                            </svg>
+                                            Accès à votre espace candidat
+                                        </h2>
+                                        <ul style="margin: 0; padding-left: 28px; color: #1E40AF; font-size: 14px;">
+                                            <li style="margin-bottom: 8px;">Le lien de finalisation restera actif
+                                                indéfiniment</li>
+                                            <li style="margin-bottom: 8px;">Une fois l'inscription finalisée et validée
+                                                par notre service, vous ne pourrez plus modifier vos informations via ce
+                                                lien</li>
+                                            <li>Votre accès à la plateforme étudiante sera activé après paiement de la
+                                                1ère tranche et vérification du paiement par la scolarité</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Section contact -->
+                            <table width="100%" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="text-align: center; padding: 20px 0 0;">
+                                        <h2
+                                            style="color: #64748B; font-size: 14px; margin: 0 0 10px 0; font-weight: 600;">
+                                            Service des admissions
+                                        </h2>
+<p style="color: #64748B; font-size: 14px; margin: 0;">
+    <a href="mailto:<%= mail %>"
+       style="color: #10B981; text-decoration: none;">
+        <%= mail %>
+    </a>
+    |
+    <a href="tel:<%= telephone %>"
+       style="color: #10B981; text-decoration: none;">
+        <%= telephone %>
+    </a>
+</p>
+
+                                        <p style="color: #64748B; font-size: 14px; margin: 15px 0 0 0;">
+                                            Heures d'ouverture : Lundi-Vendredi, 8h-16h
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Pied de page -->
+                    <tr>
+                        <td
+                            style="padding: 25px 40px; background: #F1F5F9; text-align: center; border-top: 1px solid #E2E8F0;">
+                            <p style="color: #64748B; font-size: 12px; margin: 0;">
+                                © <%= new Date().getFullYear() %> Institut Supérieur d'Ambatomirahavavy<br>
+                                    BP 1234, Ambatomirahavavy - Madagascar
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

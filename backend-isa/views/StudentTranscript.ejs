@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relevé de Notes - <%= student.firstName %> <%= student.name %></title>
+    <style>
+        :root {
+            --primary-color: #5086c1;
+            --secondary-color: #30a855;
+            --accent-color: #2b6cb0;
+            --border-color: #e2e8f0;
+            --text-dark: #2d3748;
+            --text-muted: #718096;
+            --success-color: #38a169;
+            --danger-color: #e53e3e;
+            --warning-color: #d69e2e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f7fafc;
+            color: var(--text-dark);
+            line-height: 1.4;
+            padding: 20px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                background-color: white;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-container {
+                box-shadow: none !important;
+                margin: 0;
+                padding: 1.5cm;
+            }
+            .watermark {
+                display: block !important;
+            }
+        }
+        
+        .page-container {
+            background-color: white;
+            max-width: 21cm;
+            min-height: 29.7cm;
+            margin: 0 auto;
+            padding: 2cm;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        /* En-tête officiel avec logo */
+        .official-header {
+            border-top: 4px solid var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding: 20px 0;
+            margin-bottom: 25px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-wrapper {
+            flex: 0 0 auto;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .document-info {
+            flex: 1;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .document-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .academic-year {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+        
+        .qr-code-wrapper {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .qr-code-image {
+            border: 1px solid var(--border-color);
+            padding: 5px;
+            background: white;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .qr-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        /* Informations étudiant */
+        .student-info {
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 25px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .student-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            font-size: 14px;
+        }
+        
+        .info-item {
+            padding: 5px 0;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: var(--text-muted);
+            margin-right: 8px;
+        }
+        
+        .info-value {
+            color: var(--text-dark);
+        }
+        
+        .student-name {
+            grid-column: 1 / -1;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        /* Tableau des notes */
+        .grades-section {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        
+        .semester-title {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            margin: 25px 0 15px 0;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+        
+        .teaching-unit {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .teaching-unit-header {
+            background-color: #edf2f7;
+            padding: 12px 15px;
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .grades-table thead {
+            background-color: #f7fafc;
+        }
+        
+        .grades-table th {
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: bold;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-dark);
+        }
+        
+        .grades-table th.center,
+        .grades-table td.center {
+            text-align: center;
+        }
+        
+        .grades-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        
+        .grades-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .module-code {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .grade-value {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .grade-success {
+            color: var(--success-color);
+        }
+        
+        .grade-warning {
+            color: var(--warning-color);
+        }
+        
+        .grade-danger {
+            color: var(--danger-color);
+        }
+        
+        .grade-missing {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        /* Récapitulatif */
+        .summary-section {
+            margin-top: 35px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .summary-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 15px;
+        }
+        
+        .summary-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .summary-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .summary-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .average-general {
+            grid-column: 1 / -1;
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+        }
+        
+        .average-general .summary-value {
+            color: white;
+            font-size: 24px;
+        }
+        
+        /* Signatures */
+        .signatures-section {
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 2px solid var(--border-color);
+            page-break-inside: avoid;
+        }
+        
+        .signatures-grid {
+            display: grid;
+            grid-template-columns: repeat(1, auto);
+            gap: 30px;
+            margin-top: 20px;
+            justify-content: end;
+        }
+        
+        .signature-box {
+            text-align: center;
+            width: 250px;
+            margin-left: auto;
+        }
+        
+        .signature-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .signature-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+        }
+        
+        .signature-line {
+            border-top: 1px solid var(--text-dark);
+            margin-top: 10px;
+            padding-top: 8px;
+        }
+        
+        .signature-name {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        .document-footer {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-top: 2px solid var(--primary-color);
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 140px;
+            color: rgba(0, 0, 0, 0.03);
+            z-index: -1;
+            pointer-events: none;
+            font-weight: bold;
+            display: none;
+        }
+        
+        /* Bouton d'impression */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        
+        .print-button:hover {
+            background: var(--accent-color);
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div class="watermark">ISA</div>
+    
+    <div class="page-container">
+        <!-- En-tête officiel -->
+        <div class="official-header">
+            <div class="header-content">
+                <div class="logo-wrapper">
+                    <img src="<%= logoUrl || '/logo300x300.png' %>" alt="Logo ISA" class="logo">
+                </div>
+                <div class="document-info">
+                    <div class="document-title">Relevé de Notes</div>
+                    <div class="academic-year"><%= promotion.name %></div>
+                </div>
+                <div class="qr-code-wrapper">
+                    <img src="<%= qrCode %>" alt="QR Code" class="qr-code-image">
+                    <div class="qr-label">Code de vérification</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informations étudiant -->
+        <div class="student-info">
+            <div class="student-info-grid">
+                <div class="student-name"><%= student.firstName %> <%= student.name %></div>
+                <div class="info-item">
+                    <span class="info-label">Matricule :</span>
+                    <span class="info-value"><%= student.matricule %></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Filière :</span>
+                    <span class="info-value" style="text-transform: uppercase;"><%= student.field %></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Date d'édition :</span>
+                    <span class="info-value"><%= new Date().toLocaleDateString('fr-FR', {day: '2-digit', month: 'long', year: 'numeric'}) %></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes par semestre -->
+        <% 
+        // Grouper les UE par semestre
+        const semesterGroups = {};
+        teachingUnits.forEach(tu => {
+            if (!semesterGroups[tu.semester]) {
+                semesterGroups[tu.semester] = [];
+            }
+            semesterGroups[tu.semester].push(tu);
+        });
+        
+        // Trier les semestres
+        const sortedSemesters = Object.keys(semesterGroups).sort((a, b) => a - b);
+        %>
+        
+        <% sortedSemesters.forEach(semester => { %>
+            <div class="grades-section">
+                <h3 class="semester-title">
+                    Semestre <%= semester %>
+                </h3>
+                
+                <% semesterGroups[semester].forEach(tu => { %>
+                    <div class="teaching-unit">
+                        <div class="teaching-unit-header">
+                            <%= tu.code %> - <%= tu.name %> (<%= tu.credits %> crédits)
+                        </div>
+                        <table class="grades-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 15%;">Code</th>
+                                    <th style="width: 55%;">Module</th>
+                                    <th class="center" style="width: 15%;">Coef.</th>
+                                    <th class="center" style="width: 15%;">Note /20</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% 
+                                const tuModules = grades.filter(g => 
+                                    teachingUnits.find(unit => 
+                                        unit._id.toString() === tu._id.toString() &&
+                                        unit.modules.some(m => m._id.toString() === g.moduleId?.toString())
+                                    )
+                                );
+                                
+                                if (tuModules.length === 0) { %>
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 15px;">
+                                            <i>Aucune note disponible pour cette UE</i>
+                                        </td>
+                                    </tr>
+                                <% } else {
+                                    tuModules.forEach(grade => { 
+                                        const gradeValue = grade.grade;
+                                        let gradeClass = 'grade-missing';
+                                        
+                                        if (gradeValue !== null && gradeValue !== undefined) {
+                                            if (gradeValue >= 10) {
+                                                gradeClass = 'grade-success';
+                                            } else if (gradeValue >= 7) {
+                                                gradeClass = 'grade-warning';
+                                            } else {
+                                                gradeClass = 'grade-danger';
+                                            }
+                                        }
+                                %>
+                                    <tr>
+                                        <td class="module-code"><%= grade.moduleCode %></td>
+                                        <td><%= grade.moduleTitle %></td>
+                                        <td class="center"><%= grade.moduleCoefficient %></td>
+                                        <td class="center">
+                                            <span class="grade-value <%= gradeClass %>">
+                                                <%= gradeValue !== null && gradeValue !== undefined ? gradeValue.toFixed(2) : '-' %>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <% }); 
+                                } %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% }); %>
+            </div>
+        <% }); %>
+
+        <!-- Récapitulatif -->
+        <% 
+        // Calculer la moyenne générale pondérée
+        const validGrades = grades.filter(g => g.grade !== null && g.grade !== undefined);
+        const averageGeneral = validGrades.length > 0 
+            ? (validGrades.reduce((sum, g) => sum + (g.grade * g.moduleCoefficient), 0) / validGrades.reduce((sum, g) => sum + g.moduleCoefficient, 0))
+            : 0;
+            
+        // Calculer les crédits obtenus
+        const totalCredits = teachingUnits.reduce((sum, tu) => sum + tu.credits, 0);
+        const obtainedCredits = teachingUnits.reduce((sum, tu) => {
+            const tuGrades = grades.filter(g => 
+                teachingUnits.find(unit => 
+                    unit._id.toString() === tu._id.toString() &&
+                    unit.modules.some(m => m._id.toString() === g.moduleId?.toString())
+                )
+            );
+            const tuAverage = tuGrades.length > 0 
+                ? (tuGrades.reduce((sum, g) => sum + (g.grade * g.moduleCoefficient), 0) / tuGrades.reduce((sum, g) => sum + g.moduleCoefficient, 0))
+                : 0;
+            return sum + (tuAverage >= 10 ? tu.credits : 0);
+        }, 0);
+        %>
+        
+        <div class="summary-section">
+            <div class="summary-title">Récapitulatif des résultats</div>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-label">Moyenne Générale</div>
+                    <div class="summary-value"><%= averageGeneral.toFixed(2) %> / 20</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Signatures -->
+        <div class="signatures-section">
+            <div class="signatures-grid">
+                <div class="signature-box">
+                    <div class="signature-title">Le Directeur des Études</div>
+                    <div class="signature-subtitle">Signature et cachet</div>
+                    <div class="signature-line"></div>
+                    <div class="signature-name">Dr. ANDRIANJAFY Nirina</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="document-footer">
+            <strong>Document officiel :</strong>
+            Ce relevé de notes est un document officiel de l'Institut Supérieur d'Ambatomirahavavy. 
+            Il ne peut être délivré qu'une seule fois. Toute falsification sera sanctionnée conformément au règlement intérieur.
+            <br>
+            <strong>Fait à Antananarivo, le <%= new Date().toLocaleDateString('fr-FR') %></strong>
+        </div>
+    </div>
+</body>
+</html>

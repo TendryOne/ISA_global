@@ -1,0 +1,42 @@
+{
+  "name": "backend-isa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^5.0.1",
+    "@types/express-session": "^1.18.1",
+    "argon2": "^0.41.1",
+    "backend-isa": "file:",
+    "cloudinary": "^2.7.0",
+    "connect-mongo": "^5.1.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1",
+    "helmet": "^8.1.0",
+    "luxon": "^3.7.2",
+    "mongoose": "^8.13.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.2",
+    "node-cron": "^4.2.1",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.10.1",
+    "nodemon": "^3.1.9",
+    "puppeteer": "^24.36.1",
+    "qrcode": "^1.5.4",
+    "resend": "^4.3.0",
+    "sharp": "^0.34.1",
+    "socket.io": "^4.8.1",
+    "xlsx": "^0.18.5"
+  }
+}
