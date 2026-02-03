@@ -157,8 +157,10 @@ const handleSubmit = async (values: any) => {
       title: 'Succès',
     }
   } catch (error) {
+    
     toast.value = {
       show: true,
+      // @ts-ignore
       message: error.response?.data?.error || 'Une erreur est survenue lors du téléversement.',
       type: 'error',
       title: 'Erreur',

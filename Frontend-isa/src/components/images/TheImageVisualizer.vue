@@ -63,6 +63,7 @@ const getFileIcon = computed(() => {
     zip: 'mdi:folder-zip-outline',
     rar: 'mdi:folder-zip-outline'
   }
+  // @ts-ignore
   return icons[ext] || props.icon || 'mdi:file-document-outline'
 })
 

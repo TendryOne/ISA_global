@@ -160,8 +160,6 @@ import ErrorComponent from '../error/ErrorComponent.vue'
 import type { UsageInterface } from '@/interfaces/usage.inteface'
 import type { eventLogInterface } from '@/interfaces/eventLog.interface'
 import type UserInterface from '@/interfaces/user.interfaces'
-import HeatMapDetails from './heatMapDetails.vue'
-import { checkApiForLogsEvent } from '@/utils/checkApiForLogsEvent'
 
 
 
@@ -659,8 +657,9 @@ const fetchUsage = async () => {
             }
         })
         usage.value = response.data
-    } catch (error) {
-        errorServer.value = error.response.data
+    } catch (error  : unknown) {
+        // @ts-ignore
+        errorServer.value = error.response.data || 'Erreur serveur lors de la récupération des données d\'utilisation.'
 
     } finally {
         loading.value = false

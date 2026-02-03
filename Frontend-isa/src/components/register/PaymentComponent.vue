@@ -77,8 +77,8 @@
     <div class="method-details" v-if="selectedMethod">
       <div class="details-container">
         <h3 class="details-title">
-          <Icon :icon="selectedMethodData.icon" />
-          <span>Instructions pour {{ selectedMethodData.name }}</span>
+          <Icon :icon=" selectedMethodData ? selectedMethodData.icon :  'mdi:credit-card-outline'" />
+          <span>Instructions pour {{ selectedMethodData ? selectedMethodData.name : 'Méthode de paiement' }}</span>
         </h3>
 
         <div v-if="selectedMethod === 'bank'" class="bank-details">
