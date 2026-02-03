@@ -1,0 +1,44 @@
+# Dependencies
+**/node_modules/
+**/dist/
+**/.output/
+**/.nuxt/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Docker
+docker-compose.override.yml
+
+# Uploads & Temp (fichiers utilisateurs - ne pas commiter)
+# upload/ peut être committé (fichiers par défaut)
+backend-isa/temp/*
+!backend-isa/temp/.gitkeep
+backend-isa/private/*
+!backend-isa/private/.gitkeep
+
+# SSL Certificates
+ssl/
+*.pem
+*.key
+*.crt
+
+# Backups
+backups/
+*.tar.gz
