@@ -3,7 +3,7 @@ services:
     image: mongo:7.0
     container_name: isa-mongodb
     restart: unless-stopped
-    command: ["mongod", "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/data/configdb/mongodb-keyfile"]
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/data/db/mongodb-keyfile"]
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password}
@@ -11,7 +11,7 @@ services:
     volumes:
       - mongodb_data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-      - ./mongodb-keyfile:/data/configdb/mongodb-keyfile:ro
+      - ./mongodb-keyfile:/data/db/mongodb-keyfile
     networks:
       - isa-network
     healthcheck:
