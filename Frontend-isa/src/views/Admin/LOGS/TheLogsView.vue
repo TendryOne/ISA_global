@@ -189,7 +189,7 @@
 </template>
 
 <script setup lang="ts">
-import TheLogDetailsModal from '@/components/admin/logs/TheLogDetailsModal.vue'
+import TheLogDetailsModal from '@/components/admin/logs-ui/TheLogDetailsModal.vue'
 import { ref, computed, watchEffect, watch, onMounted, onUnmounted } from 'vue'
 import { Icon } from '@iconify/vue'
 import axios from 'axios'
