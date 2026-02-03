@@ -368,7 +368,7 @@ import QuillContentViewer from '@/components/EDITOR/QuillContentViewer.vue'
 import type { AssignmentInterface } from '@/interfaces/assignment.interface'
 import QuillContentViewerDemo from '@/components/EDITOR/QuillContentViewerDemo.vue'
 import { useSocket } from '@/composables/useSocket'
-import { PostEventLog } from '@/utils/EventLog'
+import { PostEventLog } from '@/utils/eventLog'
 import { useMyUserStore } from '@/stores/userStore'
 import { link } from 'fs'
 

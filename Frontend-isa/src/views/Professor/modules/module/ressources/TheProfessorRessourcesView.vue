@@ -220,7 +220,7 @@ import TheRessourcesFormModal from '@/components/professor/TheRessourcesFormModa
 import SuccessToast from '@/components/toast/successToast.vue';
 import ConfirmModal from '@/components/admin/Admission/confirmModal.vue';
 import { useSocket } from '@/composables/useSocket';
-import { PostEventLog } from '@/utils/EventLog';
+import { PostEventLog } from '@/utils/eventLog';
 
 const toast = ref<{ show: boolean, message: string, title: string, type: 'success' | 'error' }>({
   show: false, message: '', title: '', type: 'success'

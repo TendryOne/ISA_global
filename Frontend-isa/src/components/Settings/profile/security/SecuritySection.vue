@@ -174,7 +174,7 @@ import type { ToastInterface } from '@/interfaces/toast.interface';
 import axios from 'axios';
 import { useMyUserStore } from '@/stores/userStore';
 import type UserInterface from '@/interfaces/user.interfaces';
-import { PostEventLog } from '@/utils/EventLog';
+import { PostEventLog } from '@/utils/eventLog';
 
 const user = useMyUserStore().currentUser as UserInterface
 

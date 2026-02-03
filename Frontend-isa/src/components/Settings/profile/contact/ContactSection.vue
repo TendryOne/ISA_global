@@ -163,7 +163,7 @@ import ActionButton from '@/components/ui/ActionButton.vue';
 import type { ToastInterface } from '@/interfaces/toast.interface';
 import axios from 'axios';
 import limitInput from '@/utils/limitInput';
-import { PostEventLog } from '@/utils/EventLog';
+import { PostEventLog } from '@/utils/eventLog';
 
 const userStore = useMyUserStore();
 

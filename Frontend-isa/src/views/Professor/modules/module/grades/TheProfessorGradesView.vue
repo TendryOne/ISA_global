@@ -194,7 +194,7 @@ import ActionButton from '@/components/ui/ActionButton.vue';
 import type { AssignmentInterface } from '@/interfaces/assignment.interface';
 import type { SubmissionGradesInterface } from '@/interfaces/submission.interface';
 import type { ToastInterface } from '@/interfaces/toast.interface';
-import { PostEventLog } from '@/utils/EventLog';
+import { PostEventLog } from '@/utils/eventLog';
 import { useMyUserStore } from '@/stores/userStore';
 
 // États réactifs

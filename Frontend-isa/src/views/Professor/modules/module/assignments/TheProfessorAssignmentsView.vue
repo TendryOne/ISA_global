@@ -244,7 +244,7 @@ import TheAssignmentFormModal from '@/components/professor/TheAssignmentFormModa
 import SuccessToast from '@/components/toast/successToast.vue';
 import ConfirmModal from '@/components/admin/Admission/confirmModal.vue';
 import { useSocket } from '@/composables/useSocket';
-import { PostEventLog } from '@/utils/EventLog';
+import { PostEventLog } from '@/utils/eventLog';
 import { number } from 'zod';
 import { link } from 'fs';
 

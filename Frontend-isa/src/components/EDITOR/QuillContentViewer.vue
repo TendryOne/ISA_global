@@ -46,7 +46,7 @@ import 'prismjs/components/prism-sql'
 import 'prismjs/components/prism-java'
 import axios from 'axios'
 import type { AssignmentInterface } from '@/interfaces/assignment.interface'
-import { PostEventLog } from '@/utils/EventLog'
+import { PostEventLog } from '@/utils/eventLog'
 import { useMyUserStore } from '@/stores/userStore'
 
 interface Props {

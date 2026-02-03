@@ -336,7 +336,7 @@ import { useSocket } from '@/composables/useSocket'
 import { useMyUserStore } from '@/stores/userStore'
 import type StudentInterface from '@/interfaces/student.intefaces'
 import { update } from 'lodash'
-import { PostEventLog } from '@/utils/EventLog'
+import { PostEventLog } from '@/utils/eventLog'
 
 const schemaValidation = toTypedSchema(
     z.object({
