@@ -246,7 +246,7 @@ import ConfirmModal from '@/components/admin/Admission/confirmModal.vue';
 import { useSocket } from '@/composables/useSocket';
 import { PostEventLog } from '@/utils/eventLog';
 import { number } from 'zod';
-import { link } from 'fs';
+;
 
 const toast = ref<{ show: boolean, message: string, title: string, type: 'success' | 'error' }>({
   show: false, message: '', title: '', type: 'success'
