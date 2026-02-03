@@ -3,7 +3,7 @@ import axios from 'axios'
 import { defineStore } from 'pinia'
 import { UseNotificationStore } from './notificationStore'
 import { flushUsageBeforeLogout } from '@/composables/userTracking'
-import { PostEventLog } from '@/utils/EventLog'
+import { PostEventLog } from '@/utils/eventLog'
 
 interface userStateStoreInterface {
   loaded: boolean
