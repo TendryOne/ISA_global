@@ -35,7 +35,8 @@ backend-isa/private/*
 
 # SSL Certificates
 ssl/
-*.pem
+# MongoDB keyFile (sensitive)
+mongodb-keyfile*.pem
 *.key
 *.crt
 
