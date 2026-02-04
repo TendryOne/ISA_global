@@ -32,7 +32,7 @@ services:
       PORT: 4000
       MONGODB_URI: mongodb://${MONGO_USER:-admin}:${MONGO_PASSWORD:-password}@mongodb:27017/${MONGO_DB:-isa}?authSource=admin
       SESSION_SECRET: ${SESSION_SECRET}
-      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       FRONTEND_URL: https://edu.isa-ambato.mg
       VITRINE_URL: https://isa-ambato.mg
     volumes:
