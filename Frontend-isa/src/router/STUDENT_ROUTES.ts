@@ -1,5 +1,4 @@
 import { validateSemesterGuard } from '@/middleware/utilsGuard'
-import path from 'path'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const STUDENT_ROUTES: RouteRecordRaw[] = [
