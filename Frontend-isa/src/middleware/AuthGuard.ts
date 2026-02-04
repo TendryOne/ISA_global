@@ -5,7 +5,7 @@ export const isNotAuthenticatedGuard = () => {
   if (userStore.isAuthenticated && userStore.currentUser?.role) {
     const role = userStore.currentUser.role
     const roleStr = typeof role === 'string' ? role : ''
-    
+
     if (role === 'student' || roleStr.includes('student')) {
       return '/student'
     }
