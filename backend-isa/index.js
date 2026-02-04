@@ -58,7 +58,7 @@ app.use(
 );
 
 const sessionMiddleware = session({
-  secret: process.env.SECRET_SESSION_KEY,
+  secret: process.env.SESSION_SECRET || process.env.SECRET_SESSION_KEY,
   resave: false,
   saveUninitialized: false,
   name: `ISA_auth`,
