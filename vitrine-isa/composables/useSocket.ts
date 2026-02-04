@@ -1,8 +1,9 @@
 import { io } from 'socket.io-client'
 import { ref, onUnmounted, computed } from 'vue'
 
+const socketUrl = import.meta.env.VITE_SOCKET_URL || (process.env.NODE_ENV === 'production' ? 'https://api.isa-ambato.mg' : 'http://localhost:4000')
 
-export const socketIo = io('http://localhost:4000', {
+export const socketIo = io(socketUrl, {
   withCredentials: true, 
   reconnection: true,
   reconnectionDelay: 1000,

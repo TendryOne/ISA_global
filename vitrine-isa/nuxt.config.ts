@@ -133,7 +133,7 @@ export default defineNuxtConfig({
     server : {
       proxy : {
         '/api/v1': {
-          target: 'http://localhost:4000',
+          target: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:4000',
           changeOrigin: true
           // Pas besoin de rewrite ici
         }
