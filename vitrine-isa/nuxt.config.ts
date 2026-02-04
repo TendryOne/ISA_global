@@ -4,7 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig : {
     public : {
-      maintenanceMode: false
+      maintenanceMode: false,
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'https://api.isa-ambato.mg'
     }
   },
   modules: ['@nuxt/icon', '@nuxt/image', '@nuxt/eslint', '@nuxt/fonts', '@nuxtjs/sitemap', "@vueuse/nuxt"],
@@ -133,7 +134,7 @@ export default defineNuxtConfig({
     server : {
       proxy : {
         '/api/v1': {
-          target: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:4000',
+          target: 'http://localhost:4000',
           changeOrigin: true
           // Pas besoin de rewrite ici
         }

@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
+# Create .env file for production build
+RUN echo "VITE_API_URL=https://api.isa-ambato.mg" > .env
 RUN npm run build
 
 FROM nginx:alpine

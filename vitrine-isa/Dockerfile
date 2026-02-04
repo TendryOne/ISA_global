@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
+# Set production API URL
+ENV NUXT_PUBLIC_API_URL=https://api.isa-ambato.mg
 RUN npm run build
 
 FROM node:20-alpine
