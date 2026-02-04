@@ -2,6 +2,9 @@
   <header class="header">
     <!-- Partie gauche avec logo -->
     <div class="header-left">
+      <button class="mobile-menu-button" @click="controlStore.toggleSidebar()" v-if="isMobile">
+        <Icon :icon="isCollapsed ? 'material-symbols:close-rounded' : 'material-symbols:menu-rounded'" />
+      </button>
       <router-link to="/" class="university-logo">
         <img :src="universityLogo" alt="Logo Université" class="logo-img" />
       </router-link>
@@ -24,7 +27,11 @@ import { ref } from 'vue'
 import TheHeaderNotification from './TheHeaderNotification.vue'
 import TheHeaderProfileAvatar from './TheHeaderPorfileAvatar.vue'
 import { useMyUserStore } from '@/stores/userStore'
-
+import useControlStore from '@/stores/control';
+import { storeToRefs } from 'pinia';
+import { Icon } from '@iconify/vue';
+const controlStore = useControlStore();
+const { isCollapsed, isMobile } = storeToRefs(controlStore);
 const universityLogo = '/logo-write.svg'
 
 const notifications = ref([
@@ -67,6 +74,17 @@ const notifications = ref([
   background-color: var(--white);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   height: 64px;
+}
+
+.mobile-menu-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-left {

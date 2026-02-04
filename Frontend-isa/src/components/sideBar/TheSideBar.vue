@@ -82,11 +82,9 @@
     </div>
   </div>
 
-  <!-- Version mobile -->
+
   <div v-else class="mobile-layout">
-    <!-- Intégration du header principal dans la version mobile -->
-    <header class="mobile-header-main">
-      <!-- Partie gauche avec logo et bouton menu -->
+    <!-- <header class="mobile-header-main">
       <div class="mobile-header-left">
         <button class="mobile-menu-button" @click="toggleMobileMenu">
           <Icon :icon="isMenuOpen ? 'material-symbols:close-rounded' : 'material-symbols:menu-rounded'" />
@@ -96,20 +94,17 @@
         </router-link>
       </div>
 
-      <!-- Partie droite avec notifications et profil -->
       <div class="mobile-header-right">
         <TheHeaderNotification :notifications="notifications" class="mobile-header-action" />
         <div class="mobile-divider"></div>
         <TheHeaderProfileAvatar :user="store.currentUser" university-logo="/logo-300x300.svg"
           class="mobile-header-action" />
       </div>
-    </header>
+    </header> -->
 
-    <!-- Overlay pour fermer le menu -->
-    <div v-if="isMenuOpen" class="mobile-overlay" @click="closeMobileMenu"></div>
 
-    <!-- Menu latéral mobile -->
-    <div class="mobile-sidebar" :class="{ 'mobile-sidebar--open': isMenuOpen }">
+    <div v-if="isCollapsed" class="mobile-overlay" @click="controlStore.toggleSidebar()"></div>
+    <div class="mobile-sidebar" :class="{ 'mobile-sidebar--open': isCollapsed }">
       <div class="mobile-sidebar__header">
         <div class="mobile-user-info">
           <div class="mobile-user-avatar">
@@ -120,7 +115,7 @@
             <span class="mobile-user-role">{{ formatUserRole(store.currentUser?.role) }}</span>
           </div>
         </div>
-        <button class="mobile-close-button" @click="closeMobileMenu">
+        <button class="mobile-close-button" @click="controlStore.toggleSidebar()">
           <Icon icon="material-symbols:close-rounded" />
         </button>
       </div>
@@ -129,7 +124,7 @@
         <!-- Navigation principale mobile -->
         <nav class="mobile-nav">
           <!-- Lien Dashboard mobile -->
-          <RouterLink :to="dashboardLink" class="mobile-dashboard-nav-link" @click="closeMobileMenu"
+          <RouterLink :to="dashboardLink" class="mobile-dashboard-nav-link" @click="controlStore.toggleSidebar()"
             :class="{ active: isDashboardActive }">
             <Icon icon="material-symbols:dashboard-outline" class="mobile-dashboard-icon" />
             <span>Tableau de bord</span>
@@ -149,7 +144,7 @@
 
             <div v-show="openMobileSections.includes(index)" class="mobile-section-links">
               <RouterLink v-for="(link, linkIndex) in section.links" :key="linkIndex" :to="link.slug"
-                class="mobile-nav-link" @click="closeMobileMenu"
+                class="mobile-nav-link" @click="controlStore.toggleSidebar()"
                 :class="{ active: activeLink === `${index}-${linkIndex}` }">
                 <Icon :icon="link.icon" class="mobile-link-icon" />
                 <span class="mobile-link-text">{{ link.label }}</span>
@@ -160,7 +155,7 @@
         </nav>
 
         <!-- Lien d'aide -->
-        <RouterLink to="/report" class="mobile-help-link" @click="closeMobileMenu"
+        <RouterLink to="/report" class="mobile-help-link" @click="controlStore.toggleSidebar()"
           :class="{ active: isHelpLinkActive }">
           <Icon icon="material-symbols:help-outline" />
           <span>Aide & Support</span>
@@ -192,10 +187,11 @@ import { useMyUserStore } from '@/stores/userStore'
 import { RouterLink, useRoute } from 'vue-router'
 import TheHeaderNotification from '../header/TheHeaderNotification.vue'
 import TheHeaderProfileAvatar from '../header/TheHeaderPorfileAvatar.vue'
+import useControlStore from '@/stores/control'
+import { storeToRefs } from 'pinia'
 
-const isCollapsed = ref(false)
-const isMobile = ref(false)
-const isMenuOpen = ref(false)
+
+
 const activeLink = ref('0-0')
 const openSections = ref<number[]>([0])
 const openMobileSections = ref<number[]>([0])
@@ -479,19 +475,7 @@ const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value
 }
 
-const toggleMobileMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-  if (isMenuOpen.value) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
-}
 
-const closeMobileMenu = () => {
-  isMenuOpen.value = false
-  document.body.style.overflow = ''
-}
 
 const toggleSection = (index: number) => {
   if (isCollapsed.value) {
@@ -585,14 +569,15 @@ const isBottomNavActive = (to: string) => {
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
+const controlStore = useControlStore();
+const { isMobile, isCollapsed } = storeToRefs(controlStore);
 
 const checkMobile = () => {
   if (window.innerWidth < 1000) {
     isMobile.value = true
-    isCollapsed.value = true
   } else {
     isMobile.value = false
-    isMenuOpen.value = false
+    isCollapsed.value = false
     document.body.style.overflow = ''
   }
 }
@@ -651,8 +636,8 @@ watch(
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.05),
     0 10px 20px rgba(0, 0, 0, 0.2);
-  height: 100vh;
-  position: fixed;
+  height: 91.5vh;
+  position: relative;
   left: 0;
   top: 0;
   z-index: 100;

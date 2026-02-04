@@ -24,7 +24,7 @@
               :class="{ spinning: loadingDownload }" />
             <span v-if="!isMobile">{{
               loadingDownload ? 'Téléchargement...' : 'Télécharger la fiche'
-              }}</span>
+            }}</span>
           </button>
 
           <div class="elite-action-buttons" v-if="student.status === 'pending'">

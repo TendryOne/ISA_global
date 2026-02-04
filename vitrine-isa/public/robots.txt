@@ -1,1 +1,7 @@
 
+# ISA Ambatomirahavavy - robots.txt
+
+User-agent: *
+Allow: /
+
+Sitemap: https://isa-ambato.mg/sitemap.xml

@@ -107,15 +107,18 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
+
     exclude: [
       '/admin/**',
       '/etudiant/**',
-      '/professeur/**'
+      '/professeur/**',
+      '/Admission/resultat',
     ],
     defaults: {
       changefreq: 'weekly',
       priority: 0.8
-    }
+    },
+
   },
 
   // Configuration de Nuxt Image
