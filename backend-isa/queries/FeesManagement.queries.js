@@ -1,4 +1,4 @@
-const FeesManagement = require("../models/FeesManagement.model");
+const FeesManagement = require("../models/feesManagement.model");
 const promotionQueries = require("./promotion.queries");
 
 class FeesManagementQueries {
