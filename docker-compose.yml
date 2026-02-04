@@ -35,6 +35,8 @@ services:
       ENCRYPTION_KEY: ${ENCRYPTION_KEY:-changeme-encryption-key-32-chars}
       FRONTEND_URL: https://edu.isa-ambato.mg
       VITRINE_URL: https://isa-ambato.mg
+      SOCKET_ORIGINS: https://edu.isa-ambato.mg,https://isa-ambato.mg,https://www.isa-ambato.mg,https://api.isa-ambato.mg
+      CLIENT_ORIGINS: https://edu.isa-ambato.mg,https://isa-ambato.mg,https://www.isa-ambato.mg
 
     volumes:
       - ./backend-isa/upload:/app/upload

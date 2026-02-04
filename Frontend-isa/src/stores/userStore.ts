@@ -27,7 +27,7 @@ export const useMyUserStore = defineStore('userStore', {
       }
     },
     isStudent(state: userStateStoreInterface) {
-      if (state.currentUser && state.currentUser.role.includes('student')) {
+      if (state.currentUser && state.currentUser.role && state.currentUser.role.includes('student')) {
         return true
       } else {
         return false

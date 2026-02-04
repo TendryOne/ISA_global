@@ -157,7 +157,7 @@ const semester: SemesterInterface[] = [
 
 const semesterUpdated = computed(() => {
   return semester.map((sem) => {
-    const promotion = user.parcours.find((p) => sem.unlocked.includes((p.promotion as PromotionInterface).level) && p.status === 'in progress')
+    const promotion = user.parcours?.find((p) => sem.unlocked.includes((p.promotion as PromotionInterface).level) && p.status === 'in progress')
     return {
       ...sem,
       currentPromotion: {

@@ -153,11 +153,11 @@ const schemaValidation = toTypedSchema(
 
 const user = useMyUserStore().currentUser as StudentInterface;
 const promotions = computed(() =>
-    user.parcours.map(promo => ({
+    user.parcours?.map(promo => ({
         label: (promo.promotion as PromotionInterface).name || '',
         value: (promo.promotion as PromotionInterface)._id || '',
         inProgress: promo.status === 'in progress' || false,
-    }))
+    })) || []
 );
 
 

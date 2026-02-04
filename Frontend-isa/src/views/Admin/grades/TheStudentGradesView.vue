@@ -538,7 +538,7 @@ const AllGradesAvailableAndLocked = computed(() => {
 
 const isPromotionInProgress = computed(() => {
     if (student.value && promotion.value) {
-        const parcourItem = student.value.parcours.find(p => (p.promotion as string) === promotion.value!._id)
+        const parcourItem = student.value.parcours?.find(p => (p.promotion as string) === promotion.value!._id)
         if (parcourItem && parcourItem.status === 'in progress') {
             return true
         }

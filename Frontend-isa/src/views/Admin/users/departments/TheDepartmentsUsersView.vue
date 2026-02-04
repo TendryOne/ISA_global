@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-users-container" v-if="useMyUserStore().currentUser?.role.includes('superAdmin')">
+  <div class="admin-users-container" v-if="useMyUserStore().currentUser?.role?.includes('superAdmin')">
     <!-- Header avec effet de verre -->
     <div class="admin-header-glass">
       <h1 class="admin-title">
