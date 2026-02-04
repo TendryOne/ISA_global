@@ -75,7 +75,9 @@ const inscriptionLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 5,
     skipSuccessfulRequests: true,
-    message: "Trop de tentatives d'inscription depuis cette IP. Réessayez dans 15 minutes."
+    message: "Trop de tentatives d'inscription depuis cette IP. Réessayez dans 15 minutes.",
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
 const loginLimiter = rateLimit({
@@ -83,6 +85,8 @@ const loginLimiter = rateLimit({
     max: 10,
     message: "Trop de tentatives depuis cette IP. Réessayez dans 15 minutes.",
     skipSuccessfulRequests: true,
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
 // ==================== MULTER CONFIGURATION ====================

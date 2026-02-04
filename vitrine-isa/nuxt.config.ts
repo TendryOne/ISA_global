@@ -2,8 +2,8 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  runtimeConfig : {
-    public : {
+  runtimeConfig: {
+    public: {
       maintenanceMode: false,
       apiUrl: process.env.NUXT_PUBLIC_API_URL || 'https://api.isa-ambato.mg'
     }
@@ -130,9 +130,9 @@ export default defineNuxtConfig({
       xl: 1280
     }
   },
-  vite : {
-    server : {
-      proxy : {
+  vite: {
+    server: {
+      proxy: {
         '/api/v1': {
           target: 'http://localhost:4000',
           changeOrigin: true

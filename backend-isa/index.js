@@ -32,6 +32,9 @@ StartFeesReminderCron();
 
 exports.app = app;
 
+// Trust proxy - IMPORTANT pour rate limiting et sessions derrière Nginx
+app.set('trust proxy', 1);
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -63,10 +66,11 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   name: `ISA_auth`,
   cookie: {
-    sameSite: "strict",
+    sameSite: "none", // Permet les cookies cross-domain avec HTTPS
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true, // Toujours true en production avec HTTPS
     maxAge: 60 * 60 * 24 * 7 * 1000,
+    domain: process.env.NODE_ENV === "production" ? ".isa-ambato.mg" : undefined, // Partage entre sous-domaines
   },
   store: mongostore.create({
     mongoUrl: process.env.MONGODB_URI,
@@ -78,8 +82,8 @@ app.use(sessionMiddleware);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'ok', 
+  res.status(200).json({
+    status: 'ok',
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });

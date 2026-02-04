@@ -4,7 +4,7 @@ import { ref, onUnmounted, computed } from 'vue'
 const socketUrl = process.env.NODE_ENV === 'production' ? 'https://api.isa-ambato.mg' : 'http://localhost:4000'
 
 export const socketIo = io(socketUrl, {
-  withCredentials: true, 
+  withCredentials: true,
   reconnection: true,
   reconnectionDelay: 1000,
   reconnectionAttempts: 5,

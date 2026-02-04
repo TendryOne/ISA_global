@@ -20,6 +20,8 @@ const loginLimiter = rateLimit({
   max: 10,
   message: "Trop de tentatives depuis cette IP. Réessayez dans 15 minutes.",
   skipSuccessfulRequests: true,
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 router.post("/login", loginLimiter, CheckLoginAttempts, async (req, res) => {
