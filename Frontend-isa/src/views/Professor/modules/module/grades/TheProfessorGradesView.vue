@@ -243,10 +243,10 @@ const filteredGrades = computed(() => {
   return submissionGrades.value.filter(gradeData => {
     const student = gradeData.student;
     return (
-      student.name?.toLowerCase().includes(query) ||
-      student.firstName?.toLowerCase().includes(query) ||
-      student.email?.toLowerCase().includes(query) ||
-      student.matricule?.toLowerCase().includes(query)
+      student.name.toLowerCase().includes(query) ||
+      student.firstName.toLowerCase().includes(query) ||
+      student.email.toLowerCase().includes(query) ||
+      student.matricule.toLowerCase().includes(query)
     );
   });
 });

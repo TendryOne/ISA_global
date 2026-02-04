@@ -305,8 +305,8 @@ const filteredProfessors = computed(() => {
     const query = searchQuery.value.trim().toLowerCase()
     filtered = filtered.filter(professor => {
       const fullName = professorFullName(professor).toLowerCase()
-      const matricule = professor.matricule?.toLowerCase() || ''
-      const email = professor.email?.toLowerCase() || ''
+      const matricule = professor.matricule.toLowerCase()
+      const email = professor.email.toLowerCase()
       return fullName.includes(query) || matricule.includes(query) || email.includes(query)
     })
   }

@@ -228,7 +228,7 @@ const fetchStudentList = async () => {
 // Obtenir le parcours de l'étudiant pour cette promotion
 const getStudentParcours = (student: StudentInterface) => {
     if (!promotion.value) return null
-    return student.parcours?.find(p => {
+    return student.parcours.find(p => {
         const promotionId = typeof p.promotion === 'string' ? p.promotion : p.promotion._id
         return promotionId === promotion.value!._id
     })

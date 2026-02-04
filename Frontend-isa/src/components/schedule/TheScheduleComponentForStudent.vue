@@ -887,7 +887,7 @@ const userStore = useMyUserStore();
 const user = useMyUserStore().currentUser as StudentInterface
 
 const activePromotion = computed(() => {
-  return user.parcours?.find(p => p.status === 'in progress');
+  return user.parcours.find(p => p.status === 'in progress');
 })
 
 const getWeekSchedules = async () => {

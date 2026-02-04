@@ -260,7 +260,7 @@ const filteredPromotions = computed(() => {
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
     filtered = filtered.filter(p =>
-      p.name?.toLowerCase().includes(query)
+      p.name.toLowerCase().includes(query)
     )
   }
 

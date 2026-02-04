@@ -206,14 +206,14 @@ const fetchAllGrades = async () => {
 
 const isThisPromotionsFinished = computed(() => {
     const users = useMyUserStore().currentUser as StudentInterface
-    const isCompleted = users.parcours?.find((p) => (p.promotion as PromotionInterface)._id === route.params.promotionId)?.status === 'completed'
+    const isCompleted = users.parcours.find((p) => (p.promotion as PromotionInterface)._id === route.params.promotionId)?.status === 'completed'
 
     return isCompleted
 })
 
 const promotionStatus = computed(() => {
     const users = useMyUserStore().currentUser as StudentInterface
-    const parcours = users.parcours?.find((p) => (p.promotion as PromotionInterface)._id === route.params.promotionId)
+    const parcours = users.parcours.find((p) => (p.promotion as PromotionInterface)._id === route.params.promotionId)
 
     if (!parcours) return null
 

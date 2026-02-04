@@ -473,10 +473,10 @@ const filteredSubmissions = computed(() => {
     const query = searchQuery.value.toLowerCase()
     filtered = filtered.filter(
       (submission) =>
-        submission.name?.toLowerCase().includes(query) ||
-        submission.firstName?.toLowerCase().includes(query) ||
-        submission.email?.toLowerCase().includes(query) ||
-        submission.matricule?.toLowerCase().includes(query),
+        submission.name.toLowerCase().includes(query) ||
+        submission.firstName.toLowerCase().includes(query) ||
+        submission.email.toLowerCase().includes(query) ||
+        submission.matricule.toLowerCase().includes(query),
     )
   }
 
