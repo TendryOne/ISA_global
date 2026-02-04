@@ -150,8 +150,8 @@ const student = userStore.currentUser as StudentInterface
 
 // Vérifier si l'utilisateur est admin ou super admin
 const isAdmin = computed(() => {
-  return userStore.currentUser?.role.includes('admin') ||
-    userStore.currentUser?.role.includes('super admin')
+  return userStore.currentUser?.role?.includes('admin') ||
+    userStore.currentUser?.role?.includes('super admin')
 })
 
 const getDocumentUrl = (url: string | undefined): string => {
