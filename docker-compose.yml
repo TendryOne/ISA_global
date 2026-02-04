@@ -35,11 +35,7 @@ services:
       ENCRYPTION_KEY: ${ENCRYPTION_KEY:-changeme-encryption-key-32-chars}
       FRONTEND_URL: https://edu.isa-ambato.mg
       VITRINE_URL: https://isa-ambato.mg
-      JWT_SECRET: ${JWT_SECRET:-changeme-jwt-secret}
-      MAIL_HOST: ${MAIL_HOST}
-      MAIL_PORT: ${MAIL_PORT}
-      MAIL_USER: ${MAIL_USER}
-      MAIL_PASS: ${MAIL_PASS}
+
     volumes:
       - ./backend-isa/upload:/app/upload
       - ./backend-isa/temp:/app/temp
