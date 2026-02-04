@@ -67,6 +67,8 @@ export const useMyUserStore = defineStore('userStore', {
         this.currentUser = user
         this.loaded = true
       } catch (error) {
+        this.currentUser = null
+        this.loaded = true
         return error
       }
     },

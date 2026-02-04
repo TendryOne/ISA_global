@@ -102,13 +102,17 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async () => {
+router.beforeEach(async (to) => {
   try {
-    if (!useMyUserStore().loaded) {
-      await useMyUserStore().GetUser()
+    const userStore = useMyUserStore()
+    if (!userStore.loaded) {
+      await userStore.GetUser()
     }
   } catch (error) {
-    console.log(error)
+    console.error('Error loading user:', error)
+    // En cas d'erreur, on laisse le router continuer pour permettre l'accès au login
+    useMyUserStore().currentUser = null
+    useMyUserStore().loaded = true
   }
 })
 
