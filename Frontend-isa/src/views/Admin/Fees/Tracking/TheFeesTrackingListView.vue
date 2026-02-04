@@ -501,7 +501,7 @@ const AcceptPayment = async (item: string) => {
 
   } catch (error) {
     toast.value = {
-      message: error.response.data || 'Erreur lors de l\'acceptation du paiement',
+      message: axios.isAxiosError(error) && error.response ? error.response.data : 'Erreur lors de l\'acceptation du paiement',
       show: true,
       title: 'Erreur',
       type: 'error'
@@ -528,7 +528,7 @@ const RejectPayment = async (item: string) => {
 
   } catch (error) {
     toast.value = {
-      message: error.response.data || 'Erreur lors du rejet du paiement',
+      message: axios.isAxiosError(error) && error.response ? error.response.data : 'Erreur lors du rejet du paiement',
       show: true,
       title: 'Erreur',
       type: 'error'

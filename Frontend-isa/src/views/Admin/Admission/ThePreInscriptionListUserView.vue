@@ -391,7 +391,7 @@ const fetchStudents = async () => {
     studentsStatusCount.value = response.data.statusCounts
     students.value = response.data.pendingStudents
   } catch (error) {
-    isError.value = error.response.data
+    isError.value = axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur inconnue s'est produite.";
   } finally {
     isLoading.value = false
   }

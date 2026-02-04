@@ -163,7 +163,7 @@ const fetchPromotions = async () => {
         });
         promotions.value = response.data
     } catch (error) {
-        errorServer.value = error.response?.data || "Erreur serveur inconnue."
+        errorServer.value = axios.isAxiosError(error) && error.response ? error.response.data : "Erreur serveur inconnue."
     } finally {
         loading.value = false
     }

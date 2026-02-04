@@ -3,7 +3,7 @@
     <BreadCrumbsBack title="Retour au choix de niveau" />
     <!-- En-tête -->
     <div class="promotions-header">
-      <h1> {{ route.params.level }} - {{ route.params.filiere && route.params.filiere.toUpperCase() as string }}</h1>
+      <h1> {{ route.params.level }} - {{ route.params.filiere && (route.params.filiere as string).toUpperCase() }}</h1>
       <ActionButton icon="mdi:plus" @click="createPromotion">
         Créer une promotion
       </ActionButton>
@@ -219,7 +219,7 @@ const handleToggleStatus = async (id: string | undefined) => {
     }
     toast.value = { show: true, message: 'Statut de la promotion mis à jour.', type: 'success', title: 'Succès' };
   } catch (error) {
-    toast.value = { show: true, message: error.response.data, type: 'error', title: 'Erreur' };
+    toast.value = { show: true, message: axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue lors du changement de statut', type: 'error', title: 'Erreur' };
   }
   if (!id) return;
 

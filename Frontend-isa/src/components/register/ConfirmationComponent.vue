@@ -127,6 +127,7 @@ const selectedMethodLabel = computed(() => {
     bank: 'Virement/Versement Bancaire',
     mobile: 'Mobile Money',
   }
+  // @ts-ignore
   return methods[props.values.method] || 'Non spécifié'
 })
 

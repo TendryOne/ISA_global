@@ -79,8 +79,8 @@
               <Icon icon="mdi:account-circle" width="44" height="44" />
             </div>
             <div class="teacher-info-luxury">
-              <div class="teacher-name">Pr. {{ module.teacher.firstName }} {{ module.teacher.name }}</div>
-              <div class="teacher-id">ID: {{ module.teacher.matricule }}</div>
+              <div class="teacher-name">Pr. {{ (module.teacher as ProfessorInterface).firstName }} {{ (module.teacher as ProfessorInterface).name }}</div>
+              <div class="teacher-id">ID: {{ (module.teacher as ProfessorInterface).matricule }}</div>
             </div>
             <button class="teacher-contact-btn">
               <Icon icon="mdi:email-outline" width="18" height="18" />
@@ -147,11 +147,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, computed } from 'vue'
+import {  computed } from 'vue'
 import type ModuleInterface from '@/interfaces/module.interface'
 import { Icon } from '@iconify/vue';
 import { downloadByPathAxios } from '@/utils/Download';
 import ActionButton from '@/components/ui/ActionButton.vue';
+import type ProfessorInterface from '@/interfaces/professor.interface';
 
 
 const props = defineProps<{
@@ -163,7 +164,7 @@ const props = defineProps<{
 const emit = defineEmits(['close', 'edit'])
 
 const hasTeacher = computed(() => {
-  return props.module.teacher && props.module.teacher._id && props.module.teacher._id !== ''
+  return props.module.teacher && (props.module.teacher as ProfessorInterface)._id && (props.module.teacher as ProfessorInterface)._id !== ''
 })
 
 const transformFiles = (file: string) => {

@@ -43,7 +43,7 @@
 
         <!-- Liste des promotions avec frais -->
         <div v-else class="promotions-grid">
-            <div v-for="(parcours, index) in user.parcours" :key="parcours.promotion._id" class="promotion-card"
+            <div v-for="(parcours, index) in user.parcours" :key="(parcours.promotion as PromotionInterface)._id" class="promotion-card"
                 :class="'status-' + parcours.status.replace(' ', '-')">
                 <!-- Badge de statut -->
                 <div class="status-badge" :class="'status-' + parcours.status.replace(' ', '-')">
@@ -57,8 +57,8 @@
                         <Icon icon="material-symbols:receipt" />
                     </div>
                     <div class="promotion-info">
-                        <h3 class="promotion-name">{{ parcours.promotion.name }}</h3>
-                        <p class="promotion-field">{{ parcours.promotion.field }}</p>
+                        <h3 class="promotion-name">{{ (parcours.promotion as PromotionInterface).name }}</h3>
+                        <p class="promotion-field">{{ (parcours.promotion as PromotionInterface).field }}</p>
                     </div>
                 </div>
 
@@ -69,14 +69,14 @@
                             <Icon icon="material-symbols:calendar-today" class="detail-icon" />
                             <div class="detail-content">
                                 <span class="detail-label">Début</span>
-                                <span class="detail-value">{{ formatDate(parcours.promotion.startDate) }}</span>
+                                <span class="detail-value">{{ formatDate((parcours.promotion as PromotionInterface).startDate) }}</span>
                             </div>
                         </div>
                         <div class="detail-item">
                             <Icon icon="material-symbols:event-available" class="detail-icon" />
                             <div class="detail-content">
                                 <span class="detail-label">Fin</span>
-                                <span class="detail-value">{{ formatDate(parcours.promotion.endDate) }}</span>
+                                <span class="detail-value">{{ formatDate((parcours.promotion as PromotionInterface).endDate) }}</span>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                             <Icon icon="material-symbols:school" class="detail-icon" />
                             <div class="detail-content">
                                 <span class="detail-label">Niveau</span>
-                                <span class="detail-value">{{ parcours.promotion.level }}</span>
+                                <span class="detail-value">{{ (parcours.promotion as PromotionInterface).level }}</span>
                             </div>
                         </div>
                     </div>
@@ -95,11 +95,11 @@
                 <!-- Action button -->
                 <div class="promotion-actions">
                     <router-link v-if="parcours.status === 'in progress'"
-                        :to="`/student/fees/${parcours.promotion._id}`" class="view-fees-btn">
+                        :to="`/student/fees/${(parcours.promotion as PromotionInterface)._id}`" class="view-fees-btn">
                         <Icon icon="material-symbols:payments" />
                         <span>Voir mes paiements en cours</span>
                     </router-link>
-                    <router-link v-else :to="`/student/fees/${parcours.promotion._id}`" class="view-fees-btn">
+                    <router-link v-else :to="`/student/fees/${(parcours.promotion as PromotionInterface)._id}`" class="view-fees-btn">
                         <Icon icon="material-symbols:receipt" />
                         <span>Voir l'historique de paiement</span>
                     </router-link>
@@ -119,6 +119,7 @@ import { useMyUserStore } from '@/stores/userStore'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import type { Ref } from 'vue'
+import type PromotionInterface from '@/interfaces/promotion.interface'
 
 const route = useRoute()
 const { currentUser } = storeToRefs(useMyUserStore())

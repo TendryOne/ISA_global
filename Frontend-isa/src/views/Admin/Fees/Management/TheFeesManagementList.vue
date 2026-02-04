@@ -173,7 +173,7 @@ const handleConfirm = async () => {
 
     await axios.delete(`/api/v1/feesManagement/${feesToDelete.value._id}`)
 
-    MessageToast.value = `Les frais de scolarité du niveau académique ${feesToDelete.value.level} pour l'année ${feesToDelete.value.year} ont été supprimés avec succès.`
+    MessageToast.value = `Les frais de scolarité du niveau académique ${feesToDelete.value.level} pour l'année  ont été supprimés avec succès.`
     isErrorToast.value = true
     toastType.value = "success"
     TitleToast.value = "Succès"
@@ -181,7 +181,7 @@ const handleConfirm = async () => {
     promotions.value = promotions.value.filter((u) => u._id !== feesToDelete.value?._id)
     feesToDelete.value = null
   } catch (error) {
-    MessageToast.value = error.response?.data?.message || "Une erreur est survenue"
+    MessageToast.value = axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur est survenue"
     isErrorToast.value = true
     toastType.value = "error"
     TitleToast.value = "Erreur lors de la suppression"

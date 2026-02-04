@@ -210,7 +210,7 @@ const fetchStudent = async () => {
     totalStudent.value = response.data.totalStudent
 
   } catch (error) {
-    isError.value = error.response.data
+    isError.value = axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur inconnue s'est produite.";
   } finally {
     isLoading.value = false
   }
@@ -328,7 +328,7 @@ const ValidTheStudent = async (fees: TutionFeesInterface) => {
     await fetchStudent()
   } catch (error) {
     TitleToast.value = "Erreur";
-    MessageToast.value = error.response?.data || "Une erreur inconnue s'est produite.";
+    MessageToast.value = axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur inconnue s'est produite.";
     typeToast.value = "error";
     isOpenToast.value = true;
   } finally {

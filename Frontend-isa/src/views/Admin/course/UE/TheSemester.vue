@@ -98,7 +98,7 @@ const getUEByFieldAndSemester = async (field: string, semester: string) => {
     const response = await (await axios.get(`/api/v1/teachingUnits/semesterAndField/${semester}/${field}`)).data
     ueList.value = response
   } catch (error) {
-    errorServer.value = error.response.data
+    errorServer.value = axios.isAxiosError(error) && error.response ? error.response.data : 'Erreur serveur lors de la récupération des unités d’enseignement.'
     loading.value = false
   } finally {
 
@@ -115,7 +115,7 @@ watchEffect(async () => {
 
 
 
-const handleSubmit = async (values) => {
+const handleSubmit = async (values : any) => {
   try {
     if (UEinModal.value) {
       const updatedUE = await (await axios.patch(`/api/v1/teachingUnits/${UEinModal.value._id}`, values)).data;
@@ -148,7 +148,7 @@ const handleSubmit = async (values) => {
   } catch (error) {
     toast.value = true
     toastTitle.value = 'Erreur'
-    toastMessage.value = error.response.data || 'Une erreur est survenue.'
+    toastMessage.value = axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue.'
     toastType.value = 'error'
   }
 }
@@ -166,7 +166,7 @@ const handleConfirm = async () => {
   } catch (error) {
     toast.value = true
     toastTitle.value = 'Erreur'
-    toastMessage.value = error.response.data || 'Une erreur est survenue.'
+    toastMessage.value = axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue.'
     toastType.value = 'error'
   }
 }

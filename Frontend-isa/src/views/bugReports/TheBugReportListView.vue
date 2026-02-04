@@ -217,7 +217,7 @@ const reportSchema = toTypedSchema(
 const { emit } = useSocket()
 
 
-const handleSubmit = async (values: Record<string, unknown>, actions) => {
+const handleSubmit = async (values: Record<string, unknown> ) => {
   try {
     await axios.post('/api/v1/bugReports', values);
 
@@ -235,7 +235,7 @@ const handleSubmit = async (values: Record<string, unknown>, actions) => {
   } catch (error) {
     toast.value = {
       show: true,
-      message: error.response.data || 'Une erreur est survenue lors de l\'envoi de votre rapport. Veuillez réessayer plus tard.',
+      message: axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue lors de l\'envoi de votre rapport. Veuillez réessayer plus tard.',
       type: 'error',
       title: 'Erreur d\'envoi'
     };

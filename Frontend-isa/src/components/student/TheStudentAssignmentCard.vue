@@ -43,15 +43,14 @@
         <span
           class="assignment-status-badge"
           :class="{
-            submitted: assignment.submitted && assignment.submissionStatus !== 'late',
-            late: assignment.submitted && assignment.submissionStatus === 'late',
+            submitted: assignment.submitted,
             missed: isMissed,
             pending: !assignment.submitted && !isMissed,
           }"
         >
           <Icon
             :icon="
-              assignment.submitted && assignment.submissionStatus === 'late'
+              assignment.submitted 
                 ? 'material-symbols:schedule-outline'
                 : assignment.submitted
                   ? 'material-symbols:check-circle-outline'
@@ -60,7 +59,7 @@
                     : 'material-symbols:pending-actions'
             "
           />
-          {{ assignment.submitted && assignment.submissionStatus === 'late' ? 'Rendu en retard' : assignment.submitted ? 'Rendu' : isMissed ? 'Manquée' : 'À rendre' }}
+          {{ assignment.submitted ? 'Rendu en retard' : assignment.submitted ? 'Rendu' : isMissed ? 'Manquée' : 'À rendre' }}
         </span>
       </div>
 
@@ -155,7 +154,6 @@ const getAssignmentStatusClass = (): string => {
   if (!props.assignment.isActive) return 'cancelled'
   if (isMissed.value) return 'missed'
   if (props.assignment.submitted) {
-    if (props.assignment.submissionStatus === 'late') return 'late'
     return 'completed'
   }
   return 'pending'
@@ -165,7 +163,6 @@ const getAssignmentStatusLabel = (): string => {
   if (!props.assignment.isActive) return 'Annulé'
   if (isMissed.value) return 'Échéance dépassée'
   if (props.assignment.submitted) {
-    if (props.assignment.submissionStatus === 'late') return 'Rendu en retard'
     return 'Rendu'
   }
   return 'En attente de soumission'

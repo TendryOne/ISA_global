@@ -55,7 +55,7 @@
                             </span>
                         </td>
                         <td class="promotion-cell">
-                            <span class="promotion-name">{{ request.promotion?.name || '-' }}</span>
+                            <span class="promotion-name">{{ (request.promotion as PromotionInterface).name || '-' }}</span>
                         </td>
                         <td class="status-cell">
                             <span class="status-badge" :class="`status-${request.status}`">
@@ -101,6 +101,7 @@ import { Icon } from '@iconify/vue';
 import ActionButton from '@/components/ui/ActionButton.vue';
 import TheStudentAdministrativeRequestsModal from '@/components/student/TheStudentAdministrativeRequestsModal.vue';
 import TheStudentAdministrativeFormModal from '@/components/student/TheStudentAdministrativeFormModal.vue';
+import type PromotionInterface from '@/interfaces/promotion.interface';
 
 const user = useMyUserStore().currentUser as StudentInterface;
 

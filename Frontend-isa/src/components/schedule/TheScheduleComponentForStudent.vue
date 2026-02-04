@@ -317,6 +317,7 @@ import SuccessToast from '@/components/toast/successToast.vue'
 import { useMyUserStore } from '@/stores/userStore'
 import type StudentInterface from '@/interfaces/student.intefaces'
 import TheScheduleModalViewForStudent from './TheScheduleModalViewForStudent.vue'
+import type PromotionInterface from '@/interfaces/promotion.interface'
 
 
 const toast = ref<{ show: boolean, message: string, type: 'success' | 'error', title: string }>({ show: false, message: '', type: 'success', title: 'Succès' })
@@ -917,7 +918,7 @@ const getWeekSchedules = async () => {
         scheduleCache.value.delete(cacheKey)
       }
     }
-    const response = (await axios.get(`/api/v1/schedules/promotion/${activePromotion.value?.promotion._id}`, {
+    const response = (await axios.get(`/api/v1/schedules/promotion/${(activePromotion.value?.promotion as PromotionInterface)._id}`, {
       params: {
         startDate: startDate.value,
         endDate: endDate.value
@@ -1003,7 +1004,7 @@ watch(selectedDepartment, (newDepartment, oldDepartment) => {
 })
 
 watch(
-  [currentWeek, viewMode, () => activePromotion.value?.promotion._id],
+  [currentWeek, viewMode, () => (activePromotion.value?.promotion as PromotionInterface)._id],
   async () => {
     getWeekRangeForDB()
     await getWeekSchedules()

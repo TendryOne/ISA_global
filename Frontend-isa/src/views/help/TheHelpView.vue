@@ -261,8 +261,8 @@ const sendMail = () => {
 
 const router = useRouter()
 const searchQuery = ref('')
-const activeFilter = ref(null)
-const selectedArticle = ref(null)
+const activeFilter = ref<null | string>(null)
+const selectedArticle = ref<null | typeof HelpArticles[0]>(null)
 
 // Catégories avec couleurs et icônes
 const categories = [

@@ -40,7 +40,7 @@ interface Props {
   type?: string;
   label?: string;
   placeholder?: string;
-  rules?: string | Record<string, unknown>;
+  rules?: string | Record<string, unknown> | any;
   floating?: boolean;
   icon?: string;
   error?: boolean;

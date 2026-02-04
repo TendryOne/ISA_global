@@ -330,20 +330,20 @@
                             <span>{{ getStatusLabel(item.status) }}</span>
                         </div>
                         <div class="parcours-info">
-                            <h4>{{ item.promotion?.name || 'Promotion non définie' }}</h4>
+                            <h4>{{ (item.promotion as PromotionInterface)?.name || 'Promotion non définie' }}</h4>
                             <div class="parcours-dates" v-if="item.promotion">
-                                <span v-if="item.promotion.startDate">
+                                <span v-if="(item.promotion as PromotionInterface).startDate">
                                     <Icon icon="material-symbols:calendar-today" />
-                                    Début: {{ formatDate(item.promotion.startDate) }}
+                                    Début: {{ formatDate((item.promotion as PromotionInterface).startDate) }}
                                 </span>
-                                <span v-if="item.promotion.endDate">
+                                <span v-if="(item.promotion as PromotionInterface).endDate">
                                     <Icon icon="material-symbols:event-available" />
-                                    Fin: {{ formatDate(item.promotion.endDate) }}
+                                    Fin: {{ formatDate((item.promotion as PromotionInterface).endDate) }}
                                 </span>
                             </div>
                         </div>
                         <div>
-                            <ActionButton icon="mdi:eye-circle" size="small" @click="ViewGrades(item.promotion)">
+                            <ActionButton icon="mdi:eye-circle" size="small" @click="ViewGrades(item.promotion as PromotionInterface)">
                                 voir note
                             </ActionButton>
                         </div>
@@ -446,7 +446,7 @@ const toggleRestriction = async () => {
 
     } catch (error) {
         toast.value = {
-            message: error.response?.data || 'Une erreur est survenue lors du changement de statut',
+            message: axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue lors du changement de statut',
             show: true,
             title: 'Erreur',
             type: 'error'
@@ -467,7 +467,7 @@ const deleteStudent = async () => {
         router.push('/admin/users/students');
     } catch (error) {
         toast.value = {
-            message: error.response?.data || 'Une erreur est survenue lors de la suppression de l’étudiant',
+            message: axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue lors de la suppression de l’étudiant',
             show: true,
             title: 'Erreur',
             type: 'error'
@@ -489,7 +489,7 @@ const handleSubmit = async (values: StudentInterface) => {
         openModalModify.value = false;
     } catch (error) {
         toast.value = {
-            message: error.response?.data || 'Une erreur est survenue lors de la modification de l’étudiant',
+            message: axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue lors de la modification de l’étudiant',
             show: true,
             title: 'Erreur',
             type: 'error'
@@ -505,7 +505,7 @@ const fetchStudent = async () => {
         const response = await axios.get(`/api/v1/students/${route.params.id}`);
         student.value = response.data;
     } catch (error: any) {
-        errorServer.value = error.response?.data || "Une erreur est survenue";
+        errorServer.value = axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur est survenue";
     } finally {
         loading.value = false;
     }

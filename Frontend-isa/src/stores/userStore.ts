@@ -36,7 +36,7 @@ export const useMyUserStore = defineStore('userStore', {
   },
 
   actions: {
-    async Login(values) {
+    async Login(values: any) {
       const response = (await axios.post('/api/v1/auth/login', values)).data
       this.currentUser = response
       if (this.currentUser) {
@@ -100,7 +100,7 @@ export const useMyUserStore = defineStore('userStore', {
       const notificationStore = UseNotificationStore()
       notificationStore.resetNotificationsStore()
     },
-    async updateUserDefaultPassword(values) {
+    async updateUserDefaultPassword(values: any) {
       const response = (await axios.patch('/api/v1/user/default-password', values)).data
       this.currentUser = response
     },
@@ -109,6 +109,7 @@ export const useMyUserStore = defineStore('userStore', {
     },
 
     UpdateUserLocallyWithPartialInfo(values: Partial<UserInterface>) {
+      if (!this.currentUser) return;
       this.currentUser = {
         ...this.currentUser,
         ...values,

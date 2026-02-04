@@ -481,7 +481,7 @@ const validationSchema = toTypedSchema(
 const handleSubmit = (values: Record<string, unknown>) => {
 
   const professor = props.module.find((s) => props.professors.find((p) => p._id === s.teacher))
-  const isOptionnal = (values.level && values.level.length > 1) || (values.department && values.department.length > 1) || values.courseType === 'other'
+  const isOptionnal = (values.level && Array.isArray(values.level) && values.level.length > 1) || (values.department && Array.isArray(values.department) && values.department.length > 1) || values.courseType === 'other'
 
   if (isOptionnal) {
     values.module = null

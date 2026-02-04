@@ -116,6 +116,7 @@ import { toTypedSchema } from '@vee-validate/zod';
 import type { ToastInterface } from '@/interfaces/toast.interface';
 import axios from 'axios';
 import { useSocket } from '@/composables/useSocket';
+import type PromotionInterface from '@/interfaces/promotion.interface';
 const { emit } = useSocket();
 
 const toast = ref<ToastInterface>({
@@ -153,8 +154,8 @@ const schemaValidation = toTypedSchema(
 const user = useMyUserStore().currentUser as StudentInterface;
 const promotions = computed(() =>
     user.parcours.map(promo => ({
-        label: promo.promotion.name || '',
-        value: promo.promotion._id || '',
+        label: (promo.promotion as PromotionInterface).name || '',
+        value: (promo.promotion as PromotionInterface)._id || '',
         inProgress: promo.status === 'in progress' || false,
     }))
 );
@@ -205,7 +206,7 @@ const handleSubmit = async (values: any) => {
 
     } catch (e) {
         toast.value = {
-            message: e.response.data,
+            message: axios.isAxiosError(e) && e.response ? e.response.data : "Une erreur s'est produite lors de l'envoi de la demande.",
             type: 'error',
             show: true,
             title: 'Erreur'

@@ -415,7 +415,7 @@ const initialValues = computed(() => ({
   credits: props.module?.credits || RealRemainingCredits.value,
   coefficient: props.module?.coefficient || 1,
   description: props.module?.description || '',
-  teacher: props.module?.teacher._id || '',
+  teacher: (props.module?.teacher as ProfessorInterface)?._id || '',
   teachingUnit: props.teachingUnit?._id || '',
   files: [] as File[]
 }))

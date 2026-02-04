@@ -124,7 +124,7 @@
 
           <div class="roles-container">
             <div class="role-pill" :class="user.role">
-              <Icon :icon="getRoleIcon(role)" width="16" height="16" />
+              <Icon :icon="getRoleIcon(user.role)" width="16" height="16" />
               {{ user.role }}
             </div>
           </div>
@@ -185,7 +185,7 @@ const getRoleLabel = (role: string) => {
   return roleMap[role] || role
 }
 
-const getRoleIcon = (role: string) => {
+const getRoleIcon = (role: "admin" | "student" | "professor" | "superAdmin") => {
   const iconMap: Record<string, string> = {
     'admin': 'mdi:shield-account',
     'student': 'mdi:school-outline',

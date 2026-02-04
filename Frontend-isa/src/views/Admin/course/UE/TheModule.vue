@@ -39,7 +39,7 @@
           <tr v-for="module in modules" :key="module._id">
             <td class="font-mono">{{ module.code }}</td>
             <td>{{ module.title }}</td>
-            <td>{{ module.teacher ? `Pr. ${module.teacher.firstName} ${module.teacher.name}` : 'Aucun enseignant' }}
+            <td>{{ module.teacher && typeof module.teacher !== 'string' ? `Pr. ${module.teacher.firstName} ${module.teacher.name}` : 'Aucun enseignant' }}
             </td>
             <td style="text-align: center;">
               <span class="module-type-badge" :class="getTypeClass(module.type)">
@@ -352,7 +352,7 @@ const confirmDelete = async (id: string) => {
     deletedModule.value = null;
 
   } catch (error) {
-    toastMessage.value = error.response?.data || 'Échec lors de la suppression du module';
+    toastMessage.value = axios.isAxiosError(error) && error.response ? error.response.data : 'Échec lors de la suppression du module';
     toastType.value = 'error';
     toastTitle.value = 'Échec';
     toast.value = true;

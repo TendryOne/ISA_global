@@ -216,7 +216,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ userToDelete.nomComplet }}</strong> ?</p>
+          <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ userToDelete.name }} {{ userToDelete.firstName }}</strong> ?</p>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" @click="userToDelete = null">Annuler</button>
@@ -397,7 +397,7 @@ const deleteUser = async () => {
     userToDelete.value = null
     await fetchUsers()
   } catch (error) {
-    toast.value = { show: true, message: error.response.data, type: 'error' };
+    toast.value = { show: true, message: axios.isAxiosError(error) && error.response ? error.response.data : 'Une erreur est survenue lors de la suppression de l\'utilisateur', type: 'error' };
   }
 }
 

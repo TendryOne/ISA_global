@@ -107,13 +107,13 @@
             </div>
           </div>
           <div :class="{
-            ok: values.fees && values.echeances && values.echeances.reduce((sum, e) => sum + (e.amount || 0), 0) === values.fees,
-            error: values.fees && values.echeances && values.echeances.reduce((sum, e) => sum + (e.amount || 0), 0) !== values.fees
+            ok: values.fees && values.echeances && values.echeances.reduce((sum: number, e: Echeance) => sum + (e.amount || 0), 0) === values.fees,
+            error: values.fees && values.echeances && values.echeances.reduce((sum: number, e: Echeance) => sum + (e.amount || 0), 0) !== values.fees
           }">
             Total :
             {{
               values.echeances
-                ? values.echeances.reduce((acc, e) => acc + (e.amount || 0), 0).toLocaleString()
+                ? values.echeances.reduce((acc: number, e: Echeance) => acc + (e.amount || 0), 0).toLocaleString()
                 : 0
             }}
             Ariary /
@@ -178,7 +178,7 @@ const fetchFees = async () => {
     feesResponse.value = response;
 
     if (response.echeances && response.echeances.length > 0) {
-      echeances.value = response.echeances.map(e => ({
+      echeances.value = response.echeances.map((e: Echeance) => ({
         ...e,
         date: new Date(e.date).toISOString().slice(0, 10),
       }));
@@ -307,7 +307,7 @@ const { emit } = useSocket()
 
 const handleSubmit = async (values: any) => {
   try {
-    const isTotalOfFeesAndEcheanceEqual = values.echeances.reduce((sum, e) => sum + (e.amount || 0), 0);
+    const isTotalOfFeesAndEcheanceEqual = values.echeances.reduce((sum: number, e: Echeance) => sum + (e.amount || 0), 0);
     if (!(isTotalOfFeesAndEcheanceEqual === values.fees)) {
       MessageToast.value = "Le total des frais de scolarité ne correspond pas au montant total des échéances fournies.";
       isErrorToast.value = true;
@@ -328,7 +328,7 @@ const handleSubmit = async (values: any) => {
     router.push("/admin/fees/manage/list");
 
   } catch (error) {
-    MessageToast.value = error.response.data;
+    MessageToast.value = axios.isAxiosError(error) && error.response ? error.response.data : "Erreur Serveur lors de la création des frais de scolarité.";
     isErrorToast.value = true;
     TitleToast.value = "Erreur Serveur lors de la création des frais de scolarité";
 

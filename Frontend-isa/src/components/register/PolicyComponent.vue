@@ -78,91 +78,99 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
-import { Field } from 'vee-validate';
-import { Icon } from '@iconify/vue';
-import { computed, ref } from 'vue';
+import { Field } from 'vee-validate'
+import { Icon } from '@iconify/vue'
+import { computed, ref } from 'vue'
 
-
+/* =====================
+   TYPES
+===================== */
+type DocumentType = 'contract' | 'terms' | 'privacy' | 'charter'
 
 interface Subsection {
-  id: string;
-  title: string;
-  content: string;
+  id: string
+  title: string
+  content: string
 }
 
 interface Section {
-  title: string;
-  content: string;
-  subsection?: Subsection[];
+  title: string
+  content: string
+  subsection?: Subsection[]
 }
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: 'contract',
-    validator: (value: string) => ['contract', 'terms', 'privacy', 'charter'].includes(value)
-  },
-  title: {
-    type: String,
-    default: 'DOCUMENT CONTRACTUEL'
-  },
-  version: {
-    type: String,
-    default: '1.0.0'
-  },
-  sections: {
-    type: Array as () => Section[],
-    default: () => []
-  },
-  fieldName: {
-    type: String,
-    default: 'documentAcceptance'
-  },
-  acceptanceText: {
-    type: String,
-    default: 'En cochant cette case, je reconnais avoir pris connaissance et accepté sans réserve les termes du présent document.'
-  },
-  watermark: {
-    type: String,
-    default: 'CONFIDENTIEL'
-  },
-  showSubsectionIds: {
-    type: Boolean,
-    default: false
-  },
-  validation: {
-    type: [Object]
-  }
-});
+/* =====================
+   PROPS
+===================== */
+const props = withDefaults(defineProps<{
+  type?: DocumentType
+  title?: string
+  version?: string
+  sections?: Section[]
+  fieldName?: string
+  acceptanceText?: string
+  watermark?: string
+  showSubsectionIds?: boolean
+  validation?: Record<string, unknown> | any
+}>(), {
+  type: 'contract',
+  title: 'DOCUMENT CONTRACTUEL',
+  version: '1.0.0',
+  sections: () => [],
+  fieldName: 'documentAcceptance',
+  acceptanceText:
+    'En cochant cette case, je reconnais avoir pris connaissance et accepté sans réserve les termes du présent document.',
+  watermark: 'CONFIDENTIEL',
+  showSubsectionIds: false
+})
 
-const hoverSubsection = ref<string | null>(null);
-const isApproved = ref(false);
+/* =====================
+   STATE
+===================== */
+const hoverSubsection = ref<string | null>(null)
+const isApproved = ref(false)
 
-const headerIcons = {
+/* =====================
+   ICON MAPS
+===================== */
+const headerIcons: Record<DocumentType, string> = {
   contract: 'mdi:file-document-edit-outline',
   terms: 'mdi:file-certificate-outline',
   privacy: 'mdi:shield-lock-outline',
   charter: 'mdi:laptop-account'
-};
+}
 
-const acceptanceIcons = {
+const acceptanceIcons: Record<DocumentType, string> = {
   contract: 'mdi:signature-freehand',
   terms: 'mdi:stamp',
   privacy: 'mdi:shield-check-outline',
   charter: 'mdi:account-check-outline'
-};
+}
 
+/* =====================
+   METHODS
+===================== */
 const toggleApproval = () => {
-  isApproved.value = !isApproved.value;
-};
+  isApproved.value = !isApproved.value
+}
 
-const headerIcon = computed(() => headerIcons[props.type] || 'mdi:file-document-outline');
-const acceptanceIcon = computed(() => acceptanceIcons[props.type] || 'mdi:check-circle-outline');
-const watermarkText = computed(() => props.watermark.toUpperCase());
+/* =====================
+   COMPUTED
+===================== */
+const headerIcon = computed(
+  () => headerIcons[props.type]
+)
 
+const acceptanceIcon = computed(
+  () => acceptanceIcons[props.type]
+)
+
+const watermarkText = computed(
+  () => props.watermark.toUpperCase()
+)
 </script>
+
 
 <style scoped>
 .elite-document-container {

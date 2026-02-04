@@ -79,14 +79,14 @@ const downloadAsPDFF = async () => {
     loadingDownload.value = true
 
     const response = await axios.get(
-      `/api/v1/assignments/student/download/${props.assignment._id}`,
+      `/api/v1/assignments/student/download/${props.assignment!._id}`,
       {
         responseType: 'blob',
       },
     )
 
     await PostEventLog({
-      entityId: props.assignment._id,
+      entityId: props.assignment!._id,
       entityType: "assignment",
       eventType: "STUDENT_ASSIGNMENT_DOWNLOADED",
       timestamp: new Date(),
@@ -97,7 +97,7 @@ const downloadAsPDFF = async () => {
     const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
     const link = document.createElement('a')
     link.href = url
-    link.setAttribute('download', `${props.assignment.title}.pdf`)
+    link.setAttribute('download', `${props.assignment!.title}.pdf`)
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)

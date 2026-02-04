@@ -382,7 +382,7 @@
                 </div>
             </div>
             <div class="warning-modal-actions">
-                <ActionButton @click="showPdfWarning = false" variant="outline" outline-color="gray" icon="mdi:close">
+                <ActionButton @click="showPdfWarning = false" variant="outline" outline-color="red" icon="mdi:close">
                     Annuler
                 </ActionButton>
                 <ActionButton @click="confirmDownloadPdf" icon="mdi:download" class="btn-warning">
@@ -477,7 +477,7 @@ const handleSubmitNewStatus = async (status: string) => {
         openModal.value = false
     } catch (error: any) {
         toast.value = {
-            message: error.response?.data || "Une erreur s'est produite",
+            message: axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur s'est produite",
             show: true,
             title: "Erreur",
             type: "error"
@@ -510,7 +510,7 @@ const fetchAllGrades = async () => {
         // Développer toutes les unités par défaut
         expandedUnits.value = grades.value.map(unit => unit.teachingUnit._id)
     } catch (error) {
-        errorServer.value = error.response.Data || "Erreur lors de la récupération des notes."
+        errorServer.value = axios.isAxiosError(error) && error.response ? error.response.data : "Erreur lors de la récupération des notes."
     } finally {
         loading.value = false
     }
@@ -538,7 +538,7 @@ const AllGradesAvailableAndLocked = computed(() => {
 
 const isPromotionInProgress = computed(() => {
     if (student.value && promotion.value) {
-        const parcourItem = student.value.parcours.find(p => p.promotion === promotion.value!._id)
+        const parcourItem = student.value.parcours.find(p => (p.promotion as string) === promotion.value!._id)
         if (parcourItem && parcourItem.status === 'in progress') {
             return true
         }

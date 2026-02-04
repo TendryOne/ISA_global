@@ -89,6 +89,7 @@ import { useMyUserStore } from '@/stores/userStore'
 import type StudentInterface from '@/interfaces/student.intefaces'
 import { useRoute, useRouter } from 'vue-router'
 import { semesters } from '@/data/semester'
+import type PromotionInterface from '@/interfaces/promotion.interface'
 const route = useRoute()
 interface SemesterInterface {
   unlocked: Array<string>
@@ -101,7 +102,7 @@ const router = useRouter()
 // Récupérer le nom de la promotion actuelle
 const currentPromotion = computed(() => {
   const activeParcours = user.parcours?.find((p) => p.status === 'in progress')
-  return activeParcours?.promotion?.name || null
+  return (activeParcours?.promotion as PromotionInterface)?.name || null
 })
 
 const getAcademicYear = (): string => {
@@ -156,12 +157,12 @@ const semester: SemesterInterface[] = [
 
 const semesterUpdated = computed(() => {
   return semester.map((sem) => {
-    const promotion = user.parcours.find((p) => sem.unlocked.includes(p.promotion.level) && p.status === 'in progress')
+    const promotion = user.parcours.find((p) => sem.unlocked.includes((p.promotion as PromotionInterface).level) && p.status === 'in progress')
     return {
       ...sem,
       currentPromotion: {
-        promotionId: promotion ? promotion.promotion._id : null,
-        promotionName: promotion ? promotion.promotion.name : null,
+        promotionId: promotion ? (promotion.promotion as PromotionInterface)._id : null,
+        promotionName: promotion ? (promotion.promotion as PromotionInterface).name : null,
       },
     }
   })

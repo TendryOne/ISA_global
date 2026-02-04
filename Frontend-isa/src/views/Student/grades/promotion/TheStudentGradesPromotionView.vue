@@ -171,6 +171,7 @@ import ActionButton from '@/components/ui/ActionButton.vue'
 import BreadCrumbsBack from '@/components/ui/BreadCrumbsBack.vue'
 import type { AdministrativeRequestInterface } from '@/interfaces/administrative-requests.interface'
 import type { AllGradesInterface } from '@/interfaces/all-grades.interface'
+import type PromotionInterface from '@/interfaces/promotion.interface'
 import type StudentInterface from '@/interfaces/student.intefaces'
 import type { ToastInterface } from '@/interfaces/toast.interface'
 import { useMyUserStore } from '@/stores/userStore'
@@ -184,7 +185,7 @@ const request = ref<Pick<AdministrativeRequestInterface, 'requestType' | 'promot
 const addRequest = () => {
     request.value = {
         requestType: 'transcript',
-        promotion: route.params.promotionId as string
+        promotion: route.params.promotionId as string 
     }
 }
 
@@ -205,14 +206,14 @@ const fetchAllGrades = async () => {
 
 const isThisPromotionsFinished = computed(() => {
     const users = useMyUserStore().currentUser as StudentInterface
-    const isCompleted = users.parcours.find((p) => p.promotion._id === route.params.promotionId)?.status === 'completed'
+    const isCompleted = users.parcours.find((p) => (p.promotion as PromotionInterface)._id === route.params.promotionId)?.status === 'completed'
 
     return isCompleted
 })
 
 const promotionStatus = computed(() => {
     const users = useMyUserStore().currentUser as StudentInterface
-    const parcours = users.parcours.find((p) => p.promotion._id === route.params.promotionId)
+    const parcours = users.parcours.find((p) => (p.promotion as PromotionInterface)._id === route.params.promotionId)
 
     if (!parcours) return null
 

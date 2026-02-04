@@ -24,12 +24,12 @@
 
 
             <div class="form-group">
-              <InputField name="level" label="Niveau" floating :model-value="route.params.level" disabled
+              <InputField name="level" label="Niveau" floating :model-value="String(route.params.level)" disabled
                 icon="mdi:stairs" />
             </div>
 
             <div class="form-group">
-              <InputField name="field" label="Filière" floating :model-value="route.params.filiere" disabled
+              <InputField name="field" label="Filière" floating :model-value="String(route.params.filiere)" disabled
                 icon="mdi:book-education" />
             </div>
 

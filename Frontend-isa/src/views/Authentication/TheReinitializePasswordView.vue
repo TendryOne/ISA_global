@@ -194,7 +194,7 @@ const handleReset = async () => {
       success.value = true
     }
   } catch (e) {
-    errorServer.value = e.response.data
+    errorServer.value = axios.isAxiosError(e) && e.response ? e.response.data: 'Une erreur est survenue. Veuillez réessayer plus tard.'
   } finally {
     isLoading.value = false
   }

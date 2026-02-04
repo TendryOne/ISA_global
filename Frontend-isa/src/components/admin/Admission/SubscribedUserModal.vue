@@ -222,7 +222,7 @@ const fetchTutionFees = async () => {
     const response = (await axios.get(`/api/v1/tutionFees/user/${props.student._id}`)).data
     fees.value = response
   } catch (error) {
-    errorServer.value = error.response?.data?.message || 'Erreur lors du chargement des données'
+    errorServer.value = axios.isAxiosError(error) ? error.response?.data : "Une erreur est survenue lors de la récupération des frais de scolarité."
   } finally {
     loading.value = false
   }

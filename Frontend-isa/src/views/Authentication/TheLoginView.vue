@@ -13,7 +13,7 @@
           <Icon icon="ph:identification-card-duotone" class="input-icon" />
         </div>
         <Field id="studentId" type="text" placeholder=" " required class="input-field" name="matricule"
-          @keypress="(e) => limitInput(e, 10)" />
+          @keypress="(e: KeyboardEvent) => limitInput(e, 10)" />
         <label for="studentId" class="floating-label">Identifiant universitaire</label>
         <div class="input-highlight"></div>
       </div>
@@ -96,7 +96,7 @@ const validationSchema = toTypedSchema(z.object({
 }))
 const router = useRouter()
 
-const handleLogin = async (values) => {
+const handleLogin = async (values : any) => {
   isLoading.value = true
   serverError.value = ''
   try {

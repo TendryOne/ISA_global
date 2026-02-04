@@ -124,6 +124,7 @@ import { ref } from 'vue';
 import SuccessToast from '@/components/toast/successToast.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSocket } from '@/composables/useSocket';
+import type PromotionInterface from '@/interfaces/promotion.interface';
 const { emit } = useSocket();
 const toast = ref<ToastInterface>({
     message: "",
@@ -223,12 +224,12 @@ const updateStatus = async (newStatus: string) => {
         emit("administrativeRequestStatusChangeByAdmin", { request: response.data });
 
         if (newStatus === "in-progress" && props.request?.requestType === "transcript") {
-            router.push(`/admin/grades/${props.request.promotion.field}/${props.request.promotion.level}/${props.request.promotion._id}/${props.request.student._id}`)
+            router.push(`/admin/grades/${(props.request.promotion as PromotionInterface).field}/${(props.request.promotion as PromotionInterface).level}/${(props.request.promotion as PromotionInterface)._id}/${props.request.student._id}`)
         }
 
     } catch (error: unknown) {
         toast.value = {
-            message: error.response?.data || 'Erreur lors de la mise à jour du statut.',
+            message: axios.isAxiosError(error) ? error.response?.data : 'Erreur lors de la mise à jour du statut.',
             type: "error",
             show: true,
             title: "Erreur"

@@ -40,7 +40,7 @@
           <Icon icon="ph:warning-duotone" />
           <span>Alerte urgente</span>
         </button>
-        <button class="quick-action-btn schedule" @click="sendScheduleNotification" :disabled="loading">
+        <button class="quick-action-btn schedule"  :disabled="loading">
           <Icon icon="ph:calendar-x-duotone" />
           <span>Modification emploi du temps</span>
         </button>
@@ -394,7 +394,7 @@ const sendQuickNotification = async (data: any) => {
   }
 }
 
-const handleSubmit = async (values) => {
+const handleSubmit = async (values : any) => {
   loading.value = true
 
 

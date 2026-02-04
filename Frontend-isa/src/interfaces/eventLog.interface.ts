@@ -4,7 +4,7 @@ export interface eventLogInterface {
     entityType: EntityType
     entityId: string
     timestamp: Date
-    payload: any
+    payload?: unknown
 }
 
 export type EntityType =

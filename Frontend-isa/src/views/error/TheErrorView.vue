@@ -12,7 +12,7 @@
     <!-- Contenu principal -->
     <main class="error-content">
       <div class="mascote-container">
-        <img src="/mascotte.png" alt="Mascotte universitaire" class="mascote" @click="animateMascote">
+        <img src="/mascotte.png" alt="Mascotte universitaire" class="mascote" >
         <div class="speech-bubble" v-if="showBubble">{{ bubbleMessage }}</div>
       </div>
 
@@ -64,28 +64,45 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 
-const props = defineProps({
-  error: {
-    type: Object,
-    default: () => ({
-      statusCode: 404,
-      message: "La page que vous cherchez semble avoir été déplacée ou n'existe plus.",
-      path: window.location.pathname,
-      stack: ''
-    })
-  }
+/* =====================
+   TYPES
+===================== */
+interface AppError {
+  statusCode?: number
+  message?: string
+  path?: string
+  stack?: string
+}
+
+/* =====================
+   PROPS
+===================== */
+const props = withDefaults(defineProps<{
+  error?: AppError
+}>(), {
+  error: () => ({
+    statusCode: 404,
+    message: "La page que vous cherchez semble avoir été déplacée ou n'existe plus.",
+    path: window.location.pathname,
+    stack: ''
+  })
 })
 
 const router = useRouter()
 const currentYear = new Date().getFullYear()
 
-// Données réactives
+/* =====================
+   STATE
+===================== */
 const showDetails = ref(false)
 const showBubble = ref(false)
 const showTechnicalDetails = ref(false)
+const bubbleText = ref('')
 
-// Messages par défaut en fonction du code d'erreur
-const errorMessages = {
+/* =====================
+   MESSAGES
+===================== */
+const errorMessages: Record<number, string> = {
   400: 'Requête incorrecte',
   401: 'Non autorisé',
   403: 'Accès refusé',
@@ -94,7 +111,7 @@ const errorMessages = {
   503: 'Service indisponible'
 }
 
-const bubbleMessages = {
+const bubbleMessages: Record<number, string> = {
   400: 'Oops!',
   401: 'Accès refusé!',
   403: 'Interdit!',
@@ -103,27 +120,31 @@ const bubbleMessages = {
   503: 'Maintenance!'
 }
 
-// Données calculées
-const errorCode = computed(() => props.error.statusCode || 500)
-const errorTitle = computed(() => errorMessages[errorCode.value] || 'Erreur inattendue')
+/* =====================
+   COMPUTED
+===================== */
+const errorCode = computed(() => props.error?.statusCode ?? 500)
+
+const errorTitle = computed(
+  () => errorMessages[errorCode.value] ?? 'Erreur inattendue'
+)
+
 const defaultErrorMessage = computed(() =>
   `Une erreur est survenue lors du chargement de la page.
-  Notre équipe a été notifiée du problème.`
+Notre équipe a été notifiée du problème.`
 )
-const bubbleMessage = computed(() =>
-  bubbleMessages[errorCode.value] || 'Erreur!'
+
+const bubbleMessage = computed(
+  () => bubbleText.value || bubbleMessages[errorCode.value] || 'Erreur!'
 )
-const errorString = computed(() => JSON.stringify(props.error, null, 2))
 
-// Animation mascotte
-const animateMascote = () => {
-  showBubble.value = true
-  setTimeout(() => {
-    showBubble.value = false
-  }, 2000)
-}
+const errorString = computed(() =>
+  JSON.stringify(props.error ?? {}, null, 2)
+)
 
-// Actions
+/* =====================
+   ACTIONS
+===================== */
 const goHome = () => {
   router.push('/')
 }
@@ -131,7 +152,8 @@ const goHome = () => {
 const contactSupport = () => {
   const subject = `Erreur ${errorCode.value} - ${errorTitle.value}`
   const body = `Je rencontre une erreur sur la page: ${window.location.href}`
-  window.location.href = `mailto:support@isa-ambato.mg?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  window.location.href =
+    `mailto:support@isa-ambato.mg?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 const toggleDetails = () => {
@@ -144,23 +166,28 @@ const toggleDetails = () => {
 const copyErrorDetails = async () => {
   try {
     await navigator.clipboard.writeText(errorString.value)
+    bubbleText.value = 'Copié!'
     showBubble.value = true
-    bubbleMessage.value = 'Copié!'
+
     setTimeout(() => {
       showBubble.value = false
-      bubbleMessage.value = bubbleMessages[errorCode.value] || 'Erreur!'
+      bubbleText.value = ''
     }, 2000)
-  } catch (err) {
-    console.error('Failed to copy:', err)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error('Failed to copy:', err.message)
+    }
   }
 }
 
-// Animation particules
+/* =====================
+   ANIMATION
+===================== */
 onMounted(() => {
-  // Afficher les détails techniques seulement pour les erreurs 500
   showTechnicalDetails.value = errorCode.value === 500
 
-  const particles = document.querySelectorAll('.particle')
+  const particles = document.querySelectorAll<HTMLElement>('.particle')
+
   particles.forEach(particle => {
     const size = Math.random() * 20 + 10
     const posX = Math.random() * 100
@@ -177,6 +204,7 @@ onMounted(() => {
   })
 })
 </script>
+
 
 <style scoped>
 /* (Le CSS reste identique à la version précédente) */

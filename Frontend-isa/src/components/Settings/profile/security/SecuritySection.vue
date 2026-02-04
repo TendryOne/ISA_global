@@ -297,7 +297,7 @@ const updatePassword = async (values: any) => {
   } catch (error) {
     toast.value = {
       show: true,
-      message: error.response?.data || "Une erreur est survenue lors de la mise à jour du mot de passe.",
+      message: axios.isAxiosError(error) && error.response ? error.response.data: "Une erreur inconnue s'est produite lors de la mise à jour du mot de passe.",
       type: 'error',
       title: 'Erreur'
     };

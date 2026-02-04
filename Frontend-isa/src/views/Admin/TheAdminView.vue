@@ -315,8 +315,8 @@
               <div class="activity-list">
                 <div v-for="(activity, index) in adminDashboard.recentActivities" :key="index" class="activity-item">
                   <div class="activity-left">
-                    <div class="activity-icon" :class="activity.type">
-                      <Icon :icon="getActivityIcon(activity.type)" />
+                    <div class="activity-icon" >
+                      <Icon :icon="'material-symbols:info'" />
                     </div>
                     <div class="activity-line"></div>
                   </div>
@@ -634,7 +634,7 @@ const getNotifIcon = (informationType?: string) => {
   return icons[informationType || ''] || 'material-symbols:notifications';
 };
 
-const getNotifType = (informationType?: string, warningLevel?: string) => {
+const getNotifType = (informationType?: string, warningLevel?: "warning" | "info" | "critical" | null) => {
   // Prioriser le niveau d'avertissement pour la classe
   if (warningLevel === 'critical') return 'alert';
   if (warningLevel === 'warning') return 'warning';
@@ -655,15 +655,7 @@ const handleNotificationClick = (notification: NotificationInterface) => {
   }
 };
 
-const getActivityIcon = (type: string) => {
-  const icons: Record<string, string> = {
-    user: 'material-symbols:person-add',
-    settings: 'material-symbols:settings',
-    bug: 'mdi:bug-check',
-    log: 'material-symbols:list-alt'
-  };
-  return icons[type] || 'material-symbols:info';
-};
+
 
 const getDistributionPercent = (field: string) => {
   const total = adminDashboard.value.studentsDistribution.informatique +

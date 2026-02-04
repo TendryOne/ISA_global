@@ -36,14 +36,14 @@
             <div class="info-card">
               <label>Date de naissance</label>
               <div class="value-display locked">
-                <span>{{ formatDate(userStore.currentUser?.birthDate) }}</span>
+                <span>{{ formatDate((userStore.currentUser as StudentInterface)?.birthDate) }}</span>
                 <Icon icon="mdi:lock" class="lock-icon" />
               </div>
             </div>
             <div class="info-card">
               <label>Lieu de naissance</label>
               <div class="value-display locked">
-                <span>{{ userStore.currentUser?.birthPlace || 'Non renseigné' }}</span>
+                <span>{{ (userStore.currentUser as StudentInterface)?.birthPlace || 'Non renseigné' }}</span>
                 <Icon icon="mdi:lock" class="lock-icon" />
               </div>
             </div>
@@ -57,7 +57,7 @@
             <div class="info-card">
               <label>CIN/Passport</label>
               <div class="value-display locked">
-                <span>{{ userStore.currentUser?.cin || 'Non renseigné' }}</span>
+                <span>{{ (userStore.currentUser as StudentInterface)?.cin || 'Non renseigné' }}</span>
                 <Icon icon="mdi:lock" class="lock-icon" />
               </div>
             </div>
@@ -81,14 +81,14 @@
             <div class="info-card">
               <label>Filière</label>
               <div class="value-display locked">
-                <span>{{ userStore.currentUser?.field || 'Non renseigné' }}</span>
+                <span>{{ (userStore.currentUser as StudentInterface)?.field || 'Non renseigné' }}</span>
                 <Icon icon="mdi:lock" class="lock-icon" />
               </div>
             </div>
             <div class="info-card">
               <label>Niveau</label>
               <div class="value-display locked">
-                <span>{{ userStore.currentUser?.level || 'Non renseigné' }}</span>
+                <span>{{ (userStore.currentUser as StudentInterface)?.level || 'Non renseigné' }}</span>
                 <Icon icon="mdi:lock" class="lock-icon" />
               </div>
             </div>
@@ -109,6 +109,7 @@
 </template>
 
 <script setup lang="ts">
+import type StudentInterface from '@/interfaces/student.intefaces';
 import { useMyUserStore } from '@/stores/userStore';
 import { Icon } from '@iconify/vue';
 

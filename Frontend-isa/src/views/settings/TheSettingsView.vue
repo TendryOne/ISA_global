@@ -27,7 +27,7 @@
           <div class="identity-meta">
             <div class="meta-item" v-if="userStore.isStudent">
               <Icon icon="mdi:school" />
-              <span>{{ userStore.currentUser?.field }}</span>
+              <span>{{ (userStore.currentUser as StudentInterface).field}}</span>
             </div>
             <div class="meta-item">
               <Icon icon="mdi:account-tie" />
@@ -35,11 +35,11 @@
             </div>
             <div class="meta-item" v-if="userStore.isStudent">
               <Icon icon="mdi:calendar" />
-              <span>Promotion {{ userStore.currentUser?.promotionYear || "0000" }}</span>
+              <span>Promotion {{ (userStore.currentUser as StudentInterface).promotionYear || "0000" }}</span>
             </div>
             <div class="meta-item" v-if="userStore.isStudent">
               <Icon icon="icon-park-outline:level" />
-              <span>Niveau {{ userStore.currentUser?.level || "L1" }}</span>
+              <span>Niveau {{ (userStore.currentUser as StudentInterface).level || "L1" }}</span>
             </div>
           </div>
         </div>

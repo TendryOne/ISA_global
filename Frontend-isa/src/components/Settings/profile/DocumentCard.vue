@@ -27,27 +27,38 @@
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
 
-const props = defineProps({
-  title: String,
-  file: String,
-  locked: Boolean
-})
+/* =====================
+   PROPS
+===================== */
+const props = defineProps<{
+  title?: string
+  file?: string
+  locked?: boolean
+}>()
 
-const emit = defineEmits(['upload'])
 
-const fileInput = ref(null)
+const emit = defineEmits<{
+  (e: 'upload', file: File): void
+}>()
+
+
+const fileInput = ref<HTMLInputElement | null>(null)
+
 
 const triggerUpload = () => {
-  fileInput.value.click()
+  fileInput.value?.click()
 }
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0]
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement | null
+  const file = target?.files?.[0]
+
   if (file) {
     emit('upload', file)
   }
 }
 </script>
+
 
 <style scoped>
 .document-card {

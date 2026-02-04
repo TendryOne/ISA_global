@@ -159,7 +159,7 @@ const checkToken = async () => {
     const response = (await axios.get(`/api/v1/pendingUsers/token/${route.query.token}`)).data;
     user.value = response
   } catch (error) {
-    errorServer.value = error.response.data
+    errorServer.value = axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur inconnue s'est produite.";
     LoadingServer.value = false
   } finally {
     LoadingServer.value = false
@@ -199,7 +199,7 @@ const progressPercentage = computed(() => {
   return ((currentStep.value + 1) / admissionSteps.length) * 100
 })
 
-const goToStep = (index) => {
+const goToStep = (index: number) => {
   if (index < currentStep.value) {
     currentStep.value = index
   }
@@ -223,7 +223,7 @@ const credentials = ref<{
   password: ''
 })
 
-const handleSubmit = async (values) => {
+const handleSubmit = async (values: any) => {
   try {
 
     if (!(admissionSteps.length - 1 === currentStep.value)) {
@@ -249,7 +249,7 @@ const handleSubmit = async (values) => {
     emit("newInscription", { user: response })
 
   } catch (error) {
-    errorServerInscription.value = error.response.data
+    errorServerInscription.value = axios.isAxiosError(error) && error.response ? error.response.data : "Une erreur inconnue s'est produite lors de l'inscription.";
   }
 }
 </script>

@@ -381,9 +381,9 @@ const handleDeleteAssignment = async () => {
     })
     assignmentToDelete.value = null;
   } catch (error) {
-    toast.value = { show: true, message: error.response.data, title: 'Erreur', type: 'error' };
+    toast.value = { show: true, message: axios.isAxiosError(error) ? error.response?.data : 'Erreur lors de la suppression du devoir.', title: 'Erreur', type: 'error' };
   }
-};
+};  
 
 const viewSubmissions = (assignment: AssignmentInterface) => {
   router.push(`/professor/modules/${route.params.moduleId}/assignments/${assignment._id}/promotion/${assignment.promotion}`);
@@ -433,7 +433,7 @@ const toggleAssignmentStatus = async (assignment: AssignmentInterface) => {
       assignment.isActive = true;
     }
   } catch (error) {
-    toast.value = { show: true, message: error.response.data, title: 'Erreur', type: 'error' };
+    toast.value = { show: true, message: axios.isAxiosError(error) ? error.response?.data : 'Erreur lors de la mise à jour du statut.', title: 'Erreur', type: 'error' };
   }
 
 };
@@ -575,7 +575,7 @@ const handleSubmit = async (values: Record<string, unknown>) => {
     }
     closeModal();
   } catch (error: unknown) {
-    toast.value = { show: true, message: error.response.data, title: 'Erreur', type: 'error' };
+    toast.value = { show: true, message: axios.isAxiosError(error) ? error.response?.data : 'Erreur lors de la création/modification du devoir.', title: 'Erreur', type: 'error' };
   }
 };
 

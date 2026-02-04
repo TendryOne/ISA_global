@@ -31,7 +31,7 @@ export default interface StudentInterface extends UserInterface {
   }
   parcours: [
     {
-      promotion: PromotionInterface
+      promotion: PromotionInterface | string
       status: 'in progress' | 'completed' | 'dropped' | 'repeated'
     },
   ]

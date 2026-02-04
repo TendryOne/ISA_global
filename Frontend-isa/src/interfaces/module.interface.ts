@@ -10,7 +10,7 @@ export default interface ModuleInterface {
   title: string
   coefficient: number
   credits: number
-  teacher: Ref<ProfessorInterface>
+  teacher: Ref<ProfessorInterface> | string
   teachingUnit: Ref<TeachingUnitInterface>
   type: 'Cours Magistral' | 'TD' | 'TP'
   hours: number

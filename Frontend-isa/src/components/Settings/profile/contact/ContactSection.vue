@@ -98,7 +98,7 @@
                   }}</span>
                 </template>
                 <div v-else class="value-display">
-                  <span>{{ userStore.currentUser?.emergencyContactName || 'Non renseigné' }}</span>
+                  <span>{{ (userStore.currentUser as StudentInterface)?.emergencyContactName || 'Non renseigné' }}</span>
                 </div>
               </div>
 
@@ -119,7 +119,7 @@
                   }}</span>
                 </template>
                 <div v-else class="value-display">
-                  <span>{{ getRelationLabel(userStore.currentUser?.emergencyContactRelation) }}</span>
+                  <span>{{ getRelationLabel((userStore.currentUser as StudentInterface)?.emergencyContactRelation) }}</span>
                 </div>
               </div>
 
@@ -137,7 +137,7 @@
                   }}</span>
                 </template>
                 <div v-else class="value-display">
-                  <span>+261 {{ userStore.currentUser?.emergencyContactPhone || 'Non renseigné' }}</span>
+                  <span>+261 {{ (userStore.currentUser as StudentInterface)?.emergencyContactPhone || 'Non renseigné' }}</span>
                 </div>
               </div>
             </div>
@@ -164,6 +164,7 @@ import type { ToastInterface } from '@/interfaces/toast.interface';
 import axios from 'axios';
 import limitInput from '@/utils/limitInput';
 import { PostEventLog } from '@/utils/eventLog';
+import type StudentInterface from '@/interfaces/student.intefaces';
 
 const userStore = useMyUserStore();
 
@@ -220,9 +221,9 @@ const SchemaValidation = toTypedSchema(
 
 const initialValues = computed(() => ({
   address: userStore.currentUser?.address || '',
-  emergencyContactName: userStore.isStudent && userStore.currentUser?.emergencyContactName || '',
-  emergencyContactRelation: userStore.isStudent && userStore.currentUser?.emergencyContactRelation || '',
-  emergencyContactPhone: userStore.isStudent && userStore.currentUser?.emergencyContactPhone || '',
+  emergencyContactName: userStore.isStudent && (userStore.currentUser as StudentInterface)?.emergencyContactName || '',
+  emergencyContactRelation: userStore.isStudent && (userStore.currentUser as StudentInterface)?.emergencyContactRelation || '',
+  emergencyContactPhone: userStore.isStudent && (userStore.currentUser as StudentInterface)?.emergencyContactPhone || '',
   phone: userStore.currentUser?.phone || ''
 }));
 
