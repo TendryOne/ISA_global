@@ -1,4 +1,5 @@
 import { onMounted, onBeforeUnmount } from "vue";
+import { apiFetch } from "@/plugins/fetch";
 
 let globalFlushFunction: (() => void) | null = null;
 
@@ -44,10 +45,9 @@ export function useUsageTracker(userId: string) {
     const stored = JSON.parse(localStorage.getItem("usageOffline") || "[]");
     if (!stored.length) return;
 
-    fetch("/api/v1/usage/sync", {
+    apiFetch("/api/v1/usage/sync", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessions: stored }),
+      json: { sessions: stored },
       keepalive: true,
     }).catch(() => { });
 
@@ -55,14 +55,13 @@ export function useUsageTracker(userId: string) {
   }
 
   function sendOnline(duration: number) {
-    fetch("/api/v1/usage", {
+    apiFetch("/api/v1/usage", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+      json: {
         userId,
         date: getTodayDateString(),
         duration, // en ms
-      }),
+      },
       keepalive: true,
     }).catch(() => { });
   }
