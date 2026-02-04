@@ -76,6 +76,15 @@ const sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 app.use(routes);
 
 // Dans votre error handler (app.js ou middleware)
