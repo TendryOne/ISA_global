@@ -1,13 +1,13 @@
 <template>
-  <div class="sidebar" :class="{ 'sidebar--collapsed': isCollapsed }">
+  <!-- Version desktop -->
+  <div v-if="!isMobile" class="sidebar" :class="{ 'sidebar--collapsed': isCollapsed }">
     <!-- Header élégant avec titre "Dashboard" -->
     <div class="sidebar__header">
       <transition name="fade">
         <h3 v-if="!isCollapsed" class="dashboard-title">Dashboard</h3>
       </transition>
       <button class="sidebar__toggle" @click="toggleCollapse">
-        <Icon :icon="isCollapsed ? 'material-symbols:menu-rounded' : 'material-symbols:chevron-left-rounded'
-          " />
+        <Icon :icon="isCollapsed ? 'material-symbols:menu-rounded' : 'material-symbols:chevron-left-rounded'" />
       </button>
     </div>
 
@@ -26,35 +26,33 @@
       </RouterLink>
 
       <nav class="sidebar__nav">
-        <div v-for="(section, index) in navSections" :key="index" class="nav-section">
-          <template v-if="hasRole(section.role)">
-            <div class="section-header" :class="{ active: isSectionActive(index) }" @click="toggleSection(index)">
-              <div class="icon-wrapper">
-                <Icon :icon="section.icon" class="section-icon" />
-              </div>
-              <transition name="slide-fade">
-                <span v-if="!isCollapsed" class="section-title">{{ section.title }}</span>
-              </transition>
-              <transition name="fade">
-                <Icon v-if="!isCollapsed" :icon="openSections.includes(index)
-                  ? 'material-symbols:keyboard-arrow-up-rounded'
-                  : 'material-symbols:keyboard-arrow-down-rounded'
-                  " class="chevron" />
-              </transition>
+        <div v-for="(section, index) in filteredNavSections" :key="index" class="nav-section">
+          <div class="section-header" :class="{ active: isSectionActive(index) }" @click="toggleSection(index)">
+            <div class="icon-wrapper">
+              <Icon :icon="section.icon" class="section-icon" />
             </div>
+            <transition name="slide-fade">
+              <span v-if="!isCollapsed" class="section-title">{{ section.title }}</span>
+            </transition>
+            <transition name="fade">
+              <Icon v-if="!isCollapsed" :icon="openSections.includes(index)
+                ? 'material-symbols:keyboard-arrow-up-rounded'
+                : 'material-symbols:keyboard-arrow-down-rounded'
+                " class="chevron" />
+            </transition>
+          </div>
 
-            <div v-show="!isCollapsed && openSections.includes(index)" class="section-links">
-              <RouterLink v-for="(link, linkIndex) in section.links" :key="linkIndex" :to="link.slug"
-                class="sidebar__link" :aria-current="activeLink === `${index}-${linkIndex}` ? 'page' : undefined"
-                :class="{ active: activeLink === `${index}-${linkIndex}` }">
-                <span class="link-indicator"></span>
-                <Icon :icon="link.icon" class="link-icon" />
-                <transition name="slide-fade">
-                  <span v-if="!isCollapsed" class="link-text">{{ link.label }}</span>
-                </transition>
-              </RouterLink>
-            </div>
-          </template>
+          <div v-show="!isCollapsed && openSections.includes(index)" class="section-links">
+            <RouterLink v-for="(link, linkIndex) in section.links" :key="linkIndex" :to="link.slug"
+              class="sidebar__link" :aria-current="activeLink === `${index}-${linkIndex}` ? 'page' : undefined"
+              :class="{ active: activeLink === `${index}-${linkIndex}` }">
+              <span class="link-indicator"></span>
+              <Icon :icon="link.icon" class="link-icon" />
+              <transition name="slide-fade">
+                <span v-if="!isCollapsed" class="link-text">{{ link.label }}</span>
+              </transition>
+            </RouterLink>
+          </div>
         </div>
       </nav>
     </div>
@@ -83,6 +81,108 @@
       </div>
     </div>
   </div>
+
+  <!-- Version mobile -->
+  <div v-else class="mobile-layout">
+    <!-- Intégration du header principal dans la version mobile -->
+    <header class="mobile-header-main">
+      <!-- Partie gauche avec logo et bouton menu -->
+      <div class="mobile-header-left">
+        <button class="mobile-menu-button" @click="toggleMobileMenu">
+          <Icon :icon="isMenuOpen ? 'material-symbols:close-rounded' : 'material-symbols:menu-rounded'" />
+        </button>
+        <router-link to="/" class="mobile-university-logo">
+          <img :src="universityLogo" alt="Logo Université" class="mobile-logo-img" />
+        </router-link>
+      </div>
+
+      <!-- Partie droite avec notifications et profil -->
+      <div class="mobile-header-right">
+        <TheHeaderNotification :notifications="notifications" class="mobile-header-action" />
+        <div class="mobile-divider"></div>
+        <TheHeaderProfileAvatar :user="store.currentUser" university-logo="/logo-300x300.svg"
+          class="mobile-header-action" />
+      </div>
+    </header>
+
+    <!-- Overlay pour fermer le menu -->
+    <div v-if="isMenuOpen" class="mobile-overlay" @click="closeMobileMenu"></div>
+
+    <!-- Menu latéral mobile -->
+    <div class="mobile-sidebar" :class="{ 'mobile-sidebar--open': isMenuOpen }">
+      <div class="mobile-sidebar__header">
+        <div class="mobile-user-info">
+          <div class="mobile-user-avatar">
+            <Icon icon="material-symbols:account-circle" />
+          </div>
+          <div class="mobile-user-details">
+            <h3>{{ store.currentUser?.firstName }} {{ store.currentUser?.name }}</h3>
+            <span class="mobile-user-role">{{ formatUserRole(store.currentUser?.role) }}</span>
+          </div>
+        </div>
+        <button class="mobile-close-button" @click="closeMobileMenu">
+          <Icon icon="material-symbols:close-rounded" />
+        </button>
+      </div>
+
+      <div class="mobile-sidebar__content">
+        <!-- Navigation principale mobile -->
+        <nav class="mobile-nav">
+          <!-- Lien Dashboard mobile -->
+          <RouterLink :to="dashboardLink" class="mobile-dashboard-nav-link" @click="closeMobileMenu"
+            :class="{ active: isDashboardActive }">
+            <Icon icon="material-symbols:dashboard-outline" class="mobile-dashboard-icon" />
+            <span>Tableau de bord</span>
+          </RouterLink>
+
+          <div v-for="(section, index) in filteredNavSections" :key="index" class="mobile-nav-section">
+            <div class="mobile-section-header" @click="toggleMobileSection(index)">
+              <div class="mobile-section-header__left">
+                <Icon :icon="section.icon" class="mobile-section-icon" />
+                <span class="mobile-section-title">{{ section.title }}</span>
+              </div>
+              <Icon :icon="openMobileSections.includes(index)
+                ? 'material-symbols:keyboard-arrow-up-rounded'
+                : 'material-symbols:keyboard-arrow-down-rounded'
+                " class="mobile-chevron" />
+            </div>
+
+            <div v-show="openMobileSections.includes(index)" class="mobile-section-links">
+              <RouterLink v-for="(link, linkIndex) in section.links" :key="linkIndex" :to="link.slug"
+                class="mobile-nav-link" @click="closeMobileMenu"
+                :class="{ active: activeLink === `${index}-${linkIndex}` }">
+                <Icon :icon="link.icon" class="mobile-link-icon" />
+                <span class="mobile-link-text">{{ link.label }}</span>
+                <div v-if="activeLink === `${index}-${linkIndex}`" class="mobile-link-indicator"></div>
+              </RouterLink>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Lien d'aide -->
+        <RouterLink to="/report" class="mobile-help-link" @click="closeMobileMenu"
+          :class="{ active: isHelpLinkActive }">
+          <Icon icon="material-symbols:help-outline" />
+          <span>Aide & Support</span>
+        </RouterLink>
+      </div>
+
+      <div class="mobile-sidebar__footer">
+        <div class="mobile-copyright">
+          <Icon icon="material-symbols:copyright" />
+          <span>Tous droits réservés</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation inférieure mobile -->
+
+
+    <!-- Contenu principal avec padding pour éviter le chevauchement -->
+    <div class="mobile-content">
+      <slot></slot>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -90,13 +190,91 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useMyUserStore } from '@/stores/userStore'
 import { RouterLink, useRoute } from 'vue-router'
+import TheHeaderNotification from '../header/TheHeaderNotification.vue'
+import TheHeaderProfileAvatar from '../header/TheHeaderPorfileAvatar.vue'
 
 const isCollapsed = ref(false)
+const isMobile = ref(false)
+const isMenuOpen = ref(false)
 const activeLink = ref('0-0')
 const openSections = ref<number[]>([0])
+const openMobileSections = ref<number[]>([0])
 const route = useRoute()
 const store = useMyUserStore()
-// Helper: comparaison robuste des rôles (l'interface User.role est typée atypiquement)
+
+const universityLogo = '/logo-write.svg'
+
+const notifications = ref([
+  {
+    id: 1,
+    senderName: 'Dr. Einstein',
+    senderAvatar: 'https://i.pravatar.cc/150?img=5',
+    message: 'Vous a invité à rejoindre le projet "Physique Quantique"',
+    time: '10 min',
+    read: false,
+  },
+  {
+    id: 2,
+    senderName: 'Système',
+    senderAvatar: '',
+    message: 'Votre cours de chimie a été programmé pour demain',
+    time: '1h',
+    read: true,
+  },
+  {
+    id: 3,
+    senderName: 'Étudiant Dupont',
+    senderAvatar: 'https://i.pravatar.cc/150?img=10',
+    message: 'A soumis un devoir dans "Chimie Avancée"',
+    time: '3h',
+    read: false,
+  },
+])
+
+// Navigation inférieure pour mobile
+const mobileBottomNav = computed(() => {
+  const userRole = store.currentUser?.role as unknown as string | string[] | undefined
+  if (!userRole) return []
+
+  const role = Array.isArray(userRole) ? userRole[0] : userRole
+
+  const commonItems = [
+    { to: dashboardLink.value, icon: 'material-symbols:dashboard-outline', label: 'Accueil' },
+    { to: '/report', icon: 'material-symbols:help-outline', label: 'Aide' },
+  ]
+
+  if (role === 'student') {
+    return [
+      commonItems[0],
+      { to: '/student/courses', icon: 'material-symbols:menu-book-outline', label: 'Cours' },
+      { to: '/student/schedule', icon: 'material-symbols:calendar-month-outline-rounded', label: 'EDT' },
+      { to: '/student/grades', icon: 'material-symbols:grade', label: 'Notes' },
+      commonItems[1]
+    ]
+  }
+
+  if (role === 'professor') {
+    return [
+      commonItems[0],
+      { to: '/professor/modules', icon: 'material-symbols:menu-book-outline', label: 'Cours' },
+      { to: '/professor/schedule', icon: 'material-symbols:calendar-month-outline-rounded', label: 'EDT' },
+      commonItems[1]
+    ]
+  }
+
+  if (role === 'admin' || role === 'superAdmin') {
+    return [
+      commonItems[0],
+      { to: '/admin/users/students', icon: 'material-symbols:group-outline', label: 'Utilisateurs' },
+      { to: '/admin/course', icon: 'material-symbols:menu-book-outline', label: 'Cours' },
+      { to: '/admin/fees', icon: 'material-symbols:payments-outline', label: 'Frais' },
+      commonItems[1]
+    ]
+  }
+
+  return commonItems
+})
+
 const hasRole = (sectionRole: string | string[]) => {
   const userRole = store.currentUser?.role as unknown as string | string[] | undefined
   if (!userRole) return false
@@ -104,6 +282,11 @@ const hasRole = (sectionRole: string | string[]) => {
   const usr = Array.isArray(userRole) ? userRole : [userRole]
   return usr.some((r) => sec.includes(r))
 }
+
+// Filtrer les sections selon le rôle
+const filteredNavSections = computed(() => {
+  return navSections.filter(section => hasRole(section.role))
+})
 
 const navSections = [
   // === ÉTUDIANT ===
@@ -135,7 +318,6 @@ const navSections = [
     title: 'Services Étudiants',
     icon: 'material-symbols:handshake-outline-rounded',
     links: [
-
       {
         label: 'Demande de Document',
         icon: 'material-symbols:description-outline',
@@ -162,18 +344,6 @@ const navSections = [
       },
     ],
   },
-  // {
-  //   role: ['professor'],
-  //   title: 'Annonces & Communications',
-  //   icon: 'material-symbols:group-outline',
-  //   links: [
-  //     {
-  //       label: 'Annonces',
-  //       icon: 'material-symbols:campaign-outline',
-  //       slug: '/professor/announcements',
-  //     },
-  //   ],
-  // },
 
   // === ADMINISTRATEUR ===
   {
@@ -281,7 +451,6 @@ const navSections = [
   },
 
   // === SUPER ADMIN ===
-
   {
     role: ['superAdmin'],
     title: 'BUGS & LOGS',
@@ -294,8 +463,34 @@ const navSections = [
   },
 ]
 
+const formatUserRole = (role: any) => {
+  if (!role) return ''
+  const roleStr = Array.isArray(role) ? role[0] : role
+  const rolesMap: Record<string, string> = {
+    'student': 'Étudiant',
+    'professor': 'Enseignant',
+    'admin': 'Administrateur',
+    'superAdmin': 'Super Admin'
+  }
+  return rolesMap[roleStr] || roleStr
+}
+
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value
+}
+
+const toggleMobileMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+  if (isMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+}
+
+const closeMobileMenu = () => {
+  isMenuOpen.value = false
+  document.body.style.overflow = ''
 }
 
 const toggleSection = (index: number) => {
@@ -313,11 +508,18 @@ const toggleSection = (index: number) => {
   }
 }
 
-// Déterminer et ouvrir la section/lien en fonction de la route active
+const toggleMobileSection = (index: number) => {
+  const sectionIndex = openMobileSections.value.indexOf(index)
+  if (sectionIndex > -1) {
+    openMobileSections.value.splice(sectionIndex, 1)
+  } else {
+    openMobileSections.value.push(index)
+  }
+}
+
 const updateActiveFromRoute = () => {
   const path = route.path
 
-  // Si on est exactement sur le dashboard, aucun lien de section n'est actif
   if (path === dashboardLink.value) {
     activeLink.value = ''
     return
@@ -327,8 +529,7 @@ const updateActiveFromRoute = () => {
   let bestJ: number | null = null
   let bestLen = -1
 
-  navSections.forEach((section, i) => {
-    if (!hasRole(section.role)) return
+  filteredNavSections.value.forEach((section, i) => {
     section.links.forEach((link: { slug: string }, j: number) => {
       const slug = link.slug
       if (path === slug || path.startsWith(slug + '/')) {
@@ -344,21 +545,19 @@ const updateActiveFromRoute = () => {
   if (bestI !== null && bestJ !== null) {
     activeLink.value = `${bestI}-${bestJ}`
     if (!openSections.value.includes(bestI)) openSections.value.push(bestI)
+    if (!openMobileSections.value.includes(bestI)) openMobileSections.value.push(bestI)
   } else {
     activeLink.value = ''
   }
 }
 
-// Helper pour le template
 const isSectionActive = (i: number) => activeLink.value !== '' && activeLink.value.startsWith(`${i}-`)
 
-// Vérifier si le lien d'aide est actif
 const isHelpLinkActive = computed(() => {
   const path = route.path
   return path === '/report' || path.startsWith('/report/')
 })
 
-// Lien Dashboard selon le rôle
 const dashboardLink = computed(() => {
   const userRole = store.currentUser?.role as unknown as string | string[] | undefined
   if (!userRole) return '/'
@@ -372,14 +571,20 @@ const dashboardLink = computed(() => {
   return '/'
 })
 
-// Vérifier si le dashboard est actif
 const isDashboardActive = computed(() => {
   const path = route.path
   const link = dashboardLink.value
   return path === link
 })
 
-const isMobile = ref<boolean>(false)
+const isBottomNavActive = (to: string) => {
+  const path = route.path
+  return path === to || path.startsWith(to + '/')
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 
 const checkMobile = () => {
   if (window.innerWidth < 1000) {
@@ -387,6 +592,8 @@ const checkMobile = () => {
     isCollapsed.value = true
   } else {
     isMobile.value = false
+    isMenuOpen.value = false
+    document.body.style.overflow = ''
   }
 }
 
@@ -398,6 +605,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', checkMobile)
+  document.body.style.overflow = ''
 })
 
 watch(
@@ -410,6 +618,24 @@ watch(
 </script>
 
 <style scoped>
+/* Variables CSS */
+:root {
+  --primary-dark: #1a365d;
+  --primary-darker: #0d1b2a;
+  --primary-color-light: #4299e1;
+  --primary-lighter: #63b3ed;
+  --white: #ffffff;
+  --gray-lighter: #cbd5e0;
+  --gray-light: #a0aec0;
+  --gray-50: #f7fafc;
+  --gray-100: #edf2f7;
+  --gray-600: #718096;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles Desktop */
 .sidebar {
   --sidebar-width: 280px;
   --sidebar-collapsed-width: 80px;
@@ -425,6 +651,11 @@ watch(
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.05),
     0 10px 20px rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
 }
 
 .sidebar--collapsed {
@@ -441,7 +672,6 @@ watch(
   background: var(--primary-dark);
 }
 
-/* Dashboard Link */
 .dashboard-link {
   display: flex;
   align-items: center;
@@ -463,7 +693,6 @@ watch(
   transform: translateX(2px);
   border-color: rgba(255, 255, 255, 0.2);
 }
-
 
 .dashboard-link.active {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.15));
@@ -564,7 +793,7 @@ watch(
 }
 
 .sidebar__content::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color-light);
   border-radius: 10px;
 }
 
@@ -625,7 +854,7 @@ watch(
 }
 
 .chevron {
-  color: var(--tertiary-light);
+  color: var(--gray-light);
   transition: transform 0.3s;
 }
 
@@ -633,7 +862,6 @@ watch(
   padding-left: 4rem;
   padding-right: 1rem;
   padding-top: 0.35rem;
-  /* Espace au-dessus du premier lien */
 }
 
 .sidebar__link {
@@ -649,7 +877,6 @@ watch(
   margin-bottom: 0.3rem;
 }
 
-/* Un peu d'air lorsque le premier lien est actif ou au top */
 .section-links .sidebar__link:first-child {
   margin-top: 0.15rem;
 }
@@ -702,7 +929,6 @@ watch(
   gap: 0.5rem;
 }
 
-/* Lien d'aide amélioré */
 .help-link {
   display: flex;
   align-items: center;
@@ -805,7 +1031,6 @@ watch(
   left: calc(100% + 8px);
 }
 
-/* Copyright */
 .copyright {
   display: flex;
   align-items: center;
@@ -825,7 +1050,7 @@ watch(
   opacity: 0.7;
 }
 
-/* Animations */
+/* Animations desktop */
 .fade-slide-enter-active {
   transition: all 0.3s ease-out;
 }
@@ -854,15 +1079,491 @@ watch(
   opacity: 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    width: var(--sidebar-collapsed-width);
+/* =========================================== */
+/* STYLES MOBILE */
+/* =========================================== */
+
+.mobile-layout {
+  min-height: 100vh;
+  background: var(--white);
+}
+
+/* Header mobile intégré */
+.mobile-header-main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: var(--white);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 1000;
+}
+
+.mobile-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-menu-button {
+  background: none;
+  border: none;
+  color: var(--primary-dark);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu-button:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.mobile-university-logo {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+.mobile-header-right {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 8px;
+}
+
+.mobile-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--gray-lighter);
+  margin: 0 4px;
+}
+
+/* Style pour les composants du header dans la version mobile */
+:deep(.mobile-header-action) {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Overlay */
+.mobile-overlay {
+  position: fixed;
+  top: 64px;
+  /* Commence après le header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
 
+  to {
+    opacity: 1;
+  }
+}
+
+/* Sidebar mobile */
+.mobile-sidebar {
+  position: fixed;
+  top: 64px;
+  /* Commence après le header */
+  left: 0;
+  bottom: 0;
+  width: 85%;
+  max-width: 320px;
+  background: var(--primary-dark);
+  color: var(--white);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.mobile-sidebar--open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar__header {
+  padding: 20px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.mobile-user-avatar {
+  font-size: 48px;
+  color: var(--primary-lighter);
+}
+
+.mobile-user-details h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mobile-user-role {
+  font-size: 12px;
+  color: var(--gray-lighter);
+  opacity: 0.8;
+}
+
+.mobile-close-button {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-close-button:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-sidebar__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+}
+
+/* Navigation mobile */
+.mobile-nav {
+  padding: 0 8px;
+}
+
+.mobile-dashboard-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 12px;
+  margin: 0 8px 12px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.mobile-dashboard-nav-link:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.98);
+}
+
+.mobile-dashboard-nav-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid var(--primary-lighter);
+}
+
+.mobile-dashboard-icon {
+  font-size: 20px;
+}
+
+.mobile-nav-section {
+  margin-bottom: 4px;
+}
+
+.mobile-section-header {
+  padding: 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-section-header:active {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-section-header__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-section-icon {
+  font-size: 20px;
+  color: var(--primary-lighter);
+}
+
+.mobile-section-title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.mobile-chevron {
+  font-size: 20px;
+  color: var(--gray-lighter);
+  transition: transform 0.3s ease;
+}
+
+.mobile-section-links {
+  padding-left: 44px;
+  padding-right: 12px;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 14px 12px;
+  color: var(--gray-lighter);
+  text-decoration: none;
+  border-radius: 12px;
+  margin-bottom: 2px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-link:active {
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(0.98);
+}
+
+.mobile-nav-link.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+}
+
+.mobile-link-icon {
+  font-size: 18px;
+  margin-right: 12px;
+  color: var(--primary-lighter);
+}
+
+.mobile-link-text {
+  font-size: 14px;
+  flex: 1;
+}
+
+.mobile-link-indicator {
+  position: absolute;
+  right: 12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary-lighter);
+}
+
+/* Lien d'aide mobile */
+.mobile-help-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  margin: 20px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.mobile-help-link:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.98);
+}
+
+.mobile-help-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid var(--primary-lighter);
+}
+
+/* Footer mobile sidebar */
+.mobile-sidebar__footer {
+  padding: 20px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--gray-lighter);
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Bottom navigation */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: var(--white);
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 900;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  text-decoration: none;
+  color: var(--gray-600);
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 8px 0;
+}
+
+.mobile-bottom-nav__item:active {
+  background: var(--gray-50);
+}
+
+.mobile-bottom-nav__item.active {
+  color: var(--primary-dark);
+}
+
+.mobile-bottom-nav__item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 40%;
+  height: 3px;
+  background: var(--primary-dark);
+  border-radius: 0 0 3px 3px;
+}
+
+.mobile-bottom-nav__icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.mobile-bottom-nav__label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Contenu principal mobile */
+.mobile-content {
+  padding: 64px 0 72px 0;
+  min-height: 100vh;
+  background: var(--gray-50);
+}
+
+/* Animation pour le menu mobile */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.mobile-sidebar--open {
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar mobile */
+.mobile-sidebar__content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-sidebar__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-sidebar__content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+/* Responsive pour les tablettes */
+@media (min-width: 768px) and (max-width: 1000px) {
+  .mobile-sidebar {
+    width: 70%;
+    max-width: 280px;
+  }
+
+  .mobile-logo-img {
+    height: 42px;
+  }
+}
+
+/* Cacher la navigation desktop sur mobile */
+@media (max-width: 1000px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* Responsive desktop */
+@media (max-width: 768px) {
   .sidebar:not(.sidebar--collapsed) {
     width: 280px;
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .mobile-header-main {
+    padding: 0.75rem 1rem;
+    height: 56px;
+  }
+
+  .mobile-sidebar {
+    top: 56px;
+  }
+
+  .mobile-overlay {
+    top: 56px;
+  }
+
+  .mobile-logo-img {
+    height: 32px;
+  }
+
+  .mobile-divider {
+    height: 24px;
+  }
+
+  .mobile-content {
+    padding: 56px 0 72px 0;
   }
 }
 </style>

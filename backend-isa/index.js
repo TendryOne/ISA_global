@@ -66,11 +66,11 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   name: `ISA_auth`,
   cookie: {
-    sameSite: "none", // Permet les cookies cross-domain avec HTTPS
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // "none" en prod (cross-domain), "lax" en dev
     httpOnly: true,
-    secure: true, // Toujours true en production avec HTTPS
+    secure: process.env.NODE_ENV === "production", // true en prod (HTTPS), false en dev (HTTP)
     maxAge: 60 * 60 * 24 * 7 * 1000,
-    domain: process.env.NODE_ENV === "production" ? ".isa-ambato.mg" : undefined, // Partage entre sous-domaines
+    domain: process.env.NODE_ENV === "production" ? ".isa-ambato.mg" : undefined, // Partage entre sous-domaines en prod uniquement
   },
   store: mongostore.create({
     mongoUrl: process.env.MONGODB_URI,
