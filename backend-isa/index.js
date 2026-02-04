@@ -69,7 +69,7 @@ const sessionMiddleware = session({
     maxAge: 60 * 60 * 24 * 7 * 1000,
   },
   store: mongostore.create({
-    mongoUrl: process.env.MONGO_URI,
+    mongoUrl: process.env.MONGODB_URI,
     ttl: 60 * 60 * 24 * 7,
   }),
 });
